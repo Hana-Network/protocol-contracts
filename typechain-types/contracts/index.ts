@@ -3,5 +3,5 @@
 /* eslint-disable */
 import type * as evm from "./evm";
 export type { evm };
-import type * as zevm from "./zevm";
-export type { zevm };
+import type * as hevm from "./hevm";
+export type { hevm };
