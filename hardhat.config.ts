@@ -28,7 +28,7 @@ const config: HardhatUserConfig = {
   },
   solidity: {
     compilers: [
-      { version: "0.4.19" /** For zevm/wzeta.sol */ },
+      { version: "0.4.19" /** For hevm/whana.sol */ },
       { version: "0.5.10" /** For create2 factory */ },
       {
         settings: {
