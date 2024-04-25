@@ -1,10 +1,10 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
+  HanaEth__factory,
+  HanaInteractorMock__factory,
   IERC20__factory,
   ImmutableCreate2Factory,
   ImmutableCreate2Factory__factory,
-  ZetaEth__factory,
-  ZetaInteractorMock__factory,
 } from "@typechain-types";
 import chai, { expect } from "chai";
 import { parseEther } from "ethers/lib/utils";
@@ -35,12 +35,12 @@ describe("Deterministic deployment tests", () => {
     immutableCreate2 = await immutableCreate2Factory.deploy();
   });
 
-  describe("Deploy zeta token with deterministic deployment", () => {
+  describe("Deploy hana token with deterministic deployment", () => {
     it("Should deploy a contract", async () => {
       const salthex = saltToHex("hola", signer.address);
       const constructorTypes = ["address", "uint256"];
       const constructorArgs = [signer.address, "2100000000"];
-      const contractBytecode = ZetaEth__factory.bytecode;
+      const contractBytecode = HanaEth__factory.bytecode;
 
       const bytecode = buildBytecode(constructorTypes, constructorArgs, contractBytecode);
       const expectedAddress = await immutableCreate2.findCreate2Address(salthex, bytecode);
@@ -49,7 +49,7 @@ describe("Deterministic deployment tests", () => {
       const { address } = await deployContractToAddress({
         constructorArgs: constructorArgs,
         constructorTypes: constructorTypes,
-        contractBytecode: ZetaEth__factory.bytecode,
+        contractBytecode: HanaEth__factory.bytecode,
         factoryAddress: immutableCreate2.address,
         salt: salthex,
         signer: signer,
@@ -76,7 +76,7 @@ describe("Deterministic deployment tests", () => {
       const salthex = saltToHex(saltStr, signer.address);
       const constructorTypes = ["address", "uint256"];
       const constructorArgs = [signer.address, "2100000000"];
-      const contractBytecode = ZetaEth__factory.bytecode;
+      const contractBytecode = HanaEth__factory.bytecode;
 
       const bytecode = buildBytecode(constructorTypes, constructorArgs, contractBytecode);
       const expectedAddress = buildCreate2Address(salthex, bytecode, immutableCreate2.address);
@@ -96,7 +96,7 @@ describe("Deterministic deployment tests", () => {
     const salthex = saltToHex(saltStr, signer.address);
     const constructorTypes = ["address", "uint256"];
     const constructorArgs = [signer.address, "2100000000"];
-    const contractBytecode = ZetaEth__factory.bytecode;
+    const contractBytecode = HanaEth__factory.bytecode;
 
     const bytecode = buildBytecode(constructorTypes, constructorArgs, contractBytecode);
     const expectedAddress = await immutableCreate2.findCreate2Address(salthex, bytecode);
@@ -114,14 +114,14 @@ describe("Deterministic deployment tests", () => {
     const { address } = await deployContractToAddress({
       constructorArgs: constructorArgs,
       constructorTypes: constructorTypes,
-      contractBytecode: ZetaInteractorMock__factory.bytecode,
+      contractBytecode: HanaInteractorMock__factory.bytecode,
       factoryAddress: immutableCreate2.address,
       salt: salthex,
       signer: signer,
       transferOwner: true,
     });
 
-    const contract = ZetaInteractorMock__factory.connect(address, signer);
+    const contract = HanaInteractorMock__factory.connect(address, signer);
     await contract.acceptOwnership();
     expect(await contract.owner()).to.be.eq(signer.address);
   });

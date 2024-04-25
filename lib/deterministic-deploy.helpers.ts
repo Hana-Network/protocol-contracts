@@ -7,7 +7,7 @@ import {
   buildCreate2Address,
   saltToHex,
 } from "../lib/ImmutableCreate2Factory/ImmutableCreate2Factory.helpers";
-import { ZetaProtocolNetwork } from "./address.tools";
+import { HanaProtocolNetwork } from "./address.tools";
 
 export const calculateBestSalt = async (
   maxIterations: BigNumber,
@@ -15,7 +15,7 @@ export const calculateBestSalt = async (
   constructorTypes: string[],
   constructorArgs: string[],
   contractBytecode: string,
-  network: ZetaProtocolNetwork
+  network: HanaProtocolNetwork
 ) => {
   const immutableCreate2Factory = getAddress("immutableCreate2Factory", network);
 

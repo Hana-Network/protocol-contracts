@@ -35,7 +35,7 @@ export type ZContextStructOutput = [string, string, BigNumber] & {
   chainID: BigNumber;
 };
 
-export interface ZContractInterface extends utils.Interface {
+export interface HContractInterface extends utils.Interface {
   functions: {
     "onCrossChainCall((bytes,address,uint256),address,uint256,bytes)": FunctionFragment;
   };
@@ -60,12 +60,12 @@ export interface ZContractInterface extends utils.Interface {
   events: {};
 }
 
-export interface ZContract extends BaseContract {
+export interface HContract extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: ZContractInterface;
+  interface: HContractInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -89,7 +89,7 @@ export interface ZContract extends BaseContract {
   functions: {
     onCrossChainCall(
       context: ZContextStruct,
-      zrc20: PromiseOrValue<string>,
+      hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       message: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -98,7 +98,7 @@ export interface ZContract extends BaseContract {
 
   onCrossChainCall(
     context: ZContextStruct,
-    zrc20: PromiseOrValue<string>,
+    hrc20: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     message: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -107,7 +107,7 @@ export interface ZContract extends BaseContract {
   callStatic: {
     onCrossChainCall(
       context: ZContextStruct,
-      zrc20: PromiseOrValue<string>,
+      hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       message: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
@@ -119,7 +119,7 @@ export interface ZContract extends BaseContract {
   estimateGas: {
     onCrossChainCall(
       context: ZContextStruct,
-      zrc20: PromiseOrValue<string>,
+      hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       message: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -129,7 +129,7 @@ export interface ZContract extends BaseContract {
   populateTransaction: {
     onCrossChainCall(
       context: ZContextStruct,
-      zrc20: PromiseOrValue<string>,
+      hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       message: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }

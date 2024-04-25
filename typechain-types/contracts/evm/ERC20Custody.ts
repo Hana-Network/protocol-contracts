@@ -32,19 +32,19 @@ export interface ERC20CustodyInterface extends utils.Interface {
     "TSSAddress()": FunctionFragment;
     "TSSAddressUpdater()": FunctionFragment;
     "deposit(bytes,address,uint256,bytes)": FunctionFragment;
+    "hana()": FunctionFragment;
+    "hanaFee()": FunctionFragment;
+    "hanaMaxFee()": FunctionFragment;
     "pause()": FunctionFragment;
     "paused()": FunctionFragment;
     "renounceTSSAddressUpdater()": FunctionFragment;
     "unpause()": FunctionFragment;
     "unwhitelist(address)": FunctionFragment;
+    "updateHanaFee(uint256)": FunctionFragment;
     "updateTSSAddress(address)": FunctionFragment;
-    "updateZetaFee(uint256)": FunctionFragment;
     "whitelist(address)": FunctionFragment;
     "whitelisted(address)": FunctionFragment;
     "withdraw(address,address,uint256)": FunctionFragment;
-    "zeta()": FunctionFragment;
-    "zetaFee()": FunctionFragment;
-    "zetaMaxFee()": FunctionFragment;
   };
 
   getFunction(
@@ -52,19 +52,19 @@ export interface ERC20CustodyInterface extends utils.Interface {
       | "TSSAddress"
       | "TSSAddressUpdater"
       | "deposit"
+      | "hana"
+      | "hanaFee"
+      | "hanaMaxFee"
       | "pause"
       | "paused"
       | "renounceTSSAddressUpdater"
       | "unpause"
       | "unwhitelist"
+      | "updateHanaFee"
       | "updateTSSAddress"
-      | "updateZetaFee"
       | "whitelist"
       | "whitelisted"
       | "withdraw"
-      | "zeta"
-      | "zetaFee"
-      | "zetaMaxFee"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -84,6 +84,12 @@ export interface ERC20CustodyInterface extends utils.Interface {
       PromiseOrValue<BytesLike>
     ]
   ): string;
+  encodeFunctionData(functionFragment: "hana", values?: undefined): string;
+  encodeFunctionData(functionFragment: "hanaFee", values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: "hanaMaxFee",
+    values?: undefined
+  ): string;
   encodeFunctionData(functionFragment: "pause", values?: undefined): string;
   encodeFunctionData(functionFragment: "paused", values?: undefined): string;
   encodeFunctionData(
@@ -96,12 +102,12 @@ export interface ERC20CustodyInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateTSSAddress",
-    values: [PromiseOrValue<string>]
+    functionFragment: "updateHanaFee",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateZetaFee",
-    values: [PromiseOrValue<BigNumberish>]
+    functionFragment: "updateTSSAddress",
+    values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
     functionFragment: "whitelist",
@@ -119,12 +125,6 @@ export interface ERC20CustodyInterface extends utils.Interface {
       PromiseOrValue<BigNumberish>
     ]
   ): string;
-  encodeFunctionData(functionFragment: "zeta", values?: undefined): string;
-  encodeFunctionData(functionFragment: "zetaFee", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "zetaMaxFee",
-    values?: undefined
-  ): string;
 
   decodeFunctionResult(functionFragment: "TSSAddress", data: BytesLike): Result;
   decodeFunctionResult(
@@ -132,6 +132,9 @@ export interface ERC20CustodyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hana", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hanaFee", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "hanaMaxFee", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "pause", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "paused", data: BytesLike): Result;
   decodeFunctionResult(
@@ -144,11 +147,11 @@ export interface ERC20CustodyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateTSSAddress",
+    functionFragment: "updateHanaFee",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
-    functionFragment: "updateZetaFee",
+    functionFragment: "updateTSSAddress",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
@@ -157,9 +160,6 @@ export interface ERC20CustodyInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "withdraw", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "zeta", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "zetaFee", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "zetaMaxFee", data: BytesLike): Result;
 
   events: {
     "Deposited(bytes,address,uint256,bytes)": EventFragment;
@@ -167,8 +167,8 @@ export interface ERC20CustodyInterface extends utils.Interface {
     "RenouncedTSSUpdater(address)": EventFragment;
     "Unpaused(address)": EventFragment;
     "Unwhitelisted(address)": EventFragment;
+    "UpdatedHanaFee(uint256)": EventFragment;
     "UpdatedTSSAddress(address)": EventFragment;
-    "UpdatedZetaFee(uint256)": EventFragment;
     "Whitelisted(address)": EventFragment;
     "Withdrawn(address,address,uint256)": EventFragment;
   };
@@ -178,8 +178,8 @@ export interface ERC20CustodyInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: "RenouncedTSSUpdater"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unpaused"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Unwhitelisted"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "UpdatedHanaFee"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "UpdatedTSSAddress"): EventFragment;
-  getEvent(nameOrSignatureOrTopic: "UpdatedZetaFee"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Whitelisted"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Withdrawn"): EventFragment;
 }
@@ -229,6 +229,16 @@ export type UnwhitelistedEvent = TypedEvent<[string], UnwhitelistedEventObject>;
 
 export type UnwhitelistedEventFilter = TypedEventFilter<UnwhitelistedEvent>;
 
+export interface UpdatedHanaFeeEventObject {
+  hanaFee_: BigNumber;
+}
+export type UpdatedHanaFeeEvent = TypedEvent<
+  [BigNumber],
+  UpdatedHanaFeeEventObject
+>;
+
+export type UpdatedHanaFeeEventFilter = TypedEventFilter<UpdatedHanaFeeEvent>;
+
 export interface UpdatedTSSAddressEventObject {
   TSSAddress_: string;
 }
@@ -239,16 +249,6 @@ export type UpdatedTSSAddressEvent = TypedEvent<
 
 export type UpdatedTSSAddressEventFilter =
   TypedEventFilter<UpdatedTSSAddressEvent>;
-
-export interface UpdatedZetaFeeEventObject {
-  zetaFee_: BigNumber;
-}
-export type UpdatedZetaFeeEvent = TypedEvent<
-  [BigNumber],
-  UpdatedZetaFeeEventObject
->;
-
-export type UpdatedZetaFeeEventFilter = TypedEventFilter<UpdatedZetaFeeEvent>;
 
 export interface WhitelistedEventObject {
   asset: string;
@@ -308,6 +308,12 @@ export interface ERC20Custody extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    hana(overrides?: CallOverrides): Promise<[string]>;
+
+    hanaFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    hanaMaxFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     pause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
@@ -327,13 +333,13 @@ export interface ERC20Custody extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateTSSAddress(
-      TSSAddress_: PromiseOrValue<string>,
+    updateHanaFee(
+      hanaFee_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateZetaFee(
-      zetaFee_: PromiseOrValue<BigNumberish>,
+    updateTSSAddress(
+      TSSAddress_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -353,12 +359,6 @@ export interface ERC20Custody extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
-
-    zeta(overrides?: CallOverrides): Promise<[string]>;
-
-    zetaFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    zetaMaxFee(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   TSSAddress(overrides?: CallOverrides): Promise<string>;
@@ -372,6 +372,12 @@ export interface ERC20Custody extends BaseContract {
     message: PromiseOrValue<BytesLike>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
+
+  hana(overrides?: CallOverrides): Promise<string>;
+
+  hanaFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+  hanaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   pause(
     overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -392,13 +398,13 @@ export interface ERC20Custody extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateTSSAddress(
-    TSSAddress_: PromiseOrValue<string>,
+  updateHanaFee(
+    hanaFee_: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateZetaFee(
-    zetaFee_: PromiseOrValue<BigNumberish>,
+  updateTSSAddress(
+    TSSAddress_: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -419,12 +425,6 @@ export interface ERC20Custody extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  zeta(overrides?: CallOverrides): Promise<string>;
-
-  zetaFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-  zetaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
-
   callStatic: {
     TSSAddress(overrides?: CallOverrides): Promise<string>;
 
@@ -437,6 +437,12 @@ export interface ERC20Custody extends BaseContract {
       message: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    hana(overrides?: CallOverrides): Promise<string>;
+
+    hanaFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    hanaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -451,13 +457,13 @@ export interface ERC20Custody extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateTSSAddress(
-      TSSAddress_: PromiseOrValue<string>,
+    updateHanaFee(
+      hanaFee_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateZetaFee(
-      zetaFee_: PromiseOrValue<BigNumberish>,
+    updateTSSAddress(
+      TSSAddress_: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -477,12 +483,6 @@ export interface ERC20Custody extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    zeta(overrides?: CallOverrides): Promise<string>;
-
-    zetaFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    zetaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -519,13 +519,13 @@ export interface ERC20Custody extends BaseContract {
       asset?: PromiseOrValue<string> | null
     ): UnwhitelistedEventFilter;
 
+    "UpdatedHanaFee(uint256)"(hanaFee_?: null): UpdatedHanaFeeEventFilter;
+    UpdatedHanaFee(hanaFee_?: null): UpdatedHanaFeeEventFilter;
+
     "UpdatedTSSAddress(address)"(
       TSSAddress_?: null
     ): UpdatedTSSAddressEventFilter;
     UpdatedTSSAddress(TSSAddress_?: null): UpdatedTSSAddressEventFilter;
-
-    "UpdatedZetaFee(uint256)"(zetaFee_?: null): UpdatedZetaFeeEventFilter;
-    UpdatedZetaFee(zetaFee_?: null): UpdatedZetaFeeEventFilter;
 
     "Whitelisted(address)"(
       asset?: PromiseOrValue<string> | null
@@ -557,6 +557,12 @@ export interface ERC20Custody extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    hana(overrides?: CallOverrides): Promise<BigNumber>;
+
+    hanaFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    hanaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
+
     pause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
@@ -576,13 +582,13 @@ export interface ERC20Custody extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateTSSAddress(
-      TSSAddress_: PromiseOrValue<string>,
+    updateHanaFee(
+      hanaFee_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateZetaFee(
-      zetaFee_: PromiseOrValue<BigNumberish>,
+    updateTSSAddress(
+      TSSAddress_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -602,12 +608,6 @@ export interface ERC20Custody extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
-
-    zeta(overrides?: CallOverrides): Promise<BigNumber>;
-
-    zetaFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    zetaMaxFee(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -622,6 +622,12 @@ export interface ERC20Custody extends BaseContract {
       message: PromiseOrValue<BytesLike>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
+
+    hana(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    hanaFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    hanaMaxFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pause(
       overrides?: Overrides & { from?: PromiseOrValue<string> }
@@ -642,13 +648,13 @@ export interface ERC20Custody extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateTSSAddress(
-      TSSAddress_: PromiseOrValue<string>,
+    updateHanaFee(
+      hanaFee_: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateZetaFee(
-      zetaFee_: PromiseOrValue<BigNumberish>,
+    updateTSSAddress(
+      TSSAddress_: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -668,11 +674,5 @@ export interface ERC20Custody extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
-
-    zeta(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    zetaFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    zetaMaxFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

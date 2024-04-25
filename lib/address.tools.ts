@@ -1,60 +1,60 @@
 import addresses from "../data/addresses.json";
 
-export declare type ZetaProtocolAddress =
+export declare type HanaProtocolAddress =
   | "connector"
   | "erc20Custody"
+  | "hanaToken"
+  | "hanaTokenConsumerUniV2"
+  | "hanaTokenConsumerUniV3"
   | "immutableCreate2Factory"
   | "tss"
-  | "tssUpdater"
-  | "zetaToken"
-  | "zetaTokenConsumerUniV2"
-  | "zetaTokenConsumerUniV3";
+  | "tssUpdater";
 
-export const zetaProtocolAddress: ZetaProtocolAddress[] = [
+export const hanaProtocolAddress: HanaProtocolAddress[] = [
   "connector",
   "erc20Custody",
   "immutableCreate2Factory",
   "tss",
   "tssUpdater",
-  "zetaToken",
-  "zetaTokenConsumerUniV2",
-  "zetaTokenConsumerUniV3",
+  "hanaToken",
+  "hanaTokenConsumerUniV2",
+  "hanaTokenConsumerUniV3",
 ];
-export const isZetaProtocolAddress = (str: string): str is ZetaProtocolAddress =>
-  zetaProtocolAddress.includes(str as ZetaProtocolAddress);
+export const isHanaProtocolAddress = (str: string): str is HanaProtocolAddress =>
+  hanaProtocolAddress.includes(str as HanaProtocolAddress);
 
-export declare type ZetaZEVMAddress =
+export declare type HanaHEVMAddress =
   | "fungibleModule"
+  | "hrc20"
   | "systemContract"
   | "uniswapv2Factory"
-  | "uniswapv2Router02"
-  | "zrc20";
+  | "uniswapv2Router02";
 
-export declare type ZetaProtocolTestNetwork =
+export declare type HanaProtocolTestNetwork =
   | "baobab_testnet"
   | "bsc_testnet"
   | "btc_testnet"
   | "goerli_testnet"
-  | "mumbai_testnet"
-  | "zeta_testnet";
+  | "hana_testnet"
+  | "mumbai_testnet";
 
-export const zetaProtocolTestNetworks: ZetaProtocolTestNetwork[] = [
+export const hanaProtocolTestNetworks: HanaProtocolTestNetwork[] = [
   "baobab_testnet",
   "bsc_testnet",
   "btc_testnet",
   "goerli_testnet",
   "mumbai_testnet",
-  "zeta_testnet",
+  "hana_testnet",
 ];
 
-export declare type NonZetaAddress =
+export declare type NonHanaAddress =
   | "uniswapV2Factory"
   | "uniswapV2Router02"
   | "uniswapV3Factory"
   | "uniswapV3Router"
   | "weth9";
 
-export const nonZetaAddress: NonZetaAddress[] = [
+export const nonHanaAddress: NonHanaAddress[] = [
   "uniswapV2Factory",
   "uniswapV2Router02",
   "uniswapV3Router",
@@ -62,37 +62,37 @@ export const nonZetaAddress: NonZetaAddress[] = [
   "weth9",
 ];
 
-export declare type ZetaProtocolMainNetwork = "bsc_mainnet" | "eth_mainnet" | "zeta_mainnet";
-export const zetaProtocolMainNetworks: ZetaProtocolMainNetwork[] = ["eth_mainnet", "bsc_mainnet", "zeta_mainnet"];
+export declare type HanaProtocolMainNetwork = "bsc_mainnet" | "eth_mainnet" | "hana_mainnet";
+export const hanaProtocolMainNetworks: HanaProtocolMainNetwork[] = ["eth_mainnet", "bsc_mainnet", "hana_mainnet"];
 
-export declare type ZetaProtocolNetwork = ZetaProtocolMainNetwork | ZetaProtocolTestNetwork;
-export const zetaProtocolNetworks: ZetaProtocolNetwork[] = [...zetaProtocolTestNetworks, ...zetaProtocolMainNetworks];
+export declare type HanaProtocolNetwork = HanaProtocolMainNetwork | HanaProtocolTestNetwork;
+export const hanaProtocolNetworks: HanaProtocolNetwork[] = [...hanaProtocolTestNetworks, ...hanaProtocolMainNetworks];
 
-export declare type ZetaProtocolEnviroment = "mainnet" | "testnet";
+export declare type HanaProtocolEnviroment = "mainnet" | "testnet";
 
-export const isProtocolNetworkName = (str: string): str is ZetaProtocolNetwork =>
-  zetaProtocolNetworks.includes(str as ZetaProtocolNetwork);
+export const isProtocolNetworkName = (str: string): str is HanaProtocolNetwork =>
+  hanaProtocolNetworks.includes(str as HanaProtocolNetwork);
 
-export const isTestnetNetwork = (network: ZetaProtocolTestNetwork): boolean => {
-  return zetaProtocolTestNetworks.includes(network);
+export const isTestnetNetwork = (network: HanaProtocolTestNetwork): boolean => {
+  return hanaProtocolTestNetworks.includes(network);
 };
 
-export const isMainnetNetwork = (network: ZetaProtocolTestNetwork): boolean => {
+export const isMainnetNetwork = (network: HanaProtocolTestNetwork): boolean => {
   return false;
 };
 
-// export const getAddress = (address: ZetaProtocolAddress | ZetaZEVMAddress, network: ZetaProtocolNetwork): string => {
-//   if (isZetaProtocolAddress(address)) {
+// export const getAddress = (address: HanaHEVMAddress | HanaProtocolAddress, network: HanaProtocolNetwork): string => {
+//   if (isHanaProtocolAddress(address)) {
 //     return (addresses["ccm"] as any)[network][address];
 //   }
 
-//   return (addresses["zevm"] as any)[network][address];
+//   return (addresses["hevm"] as any)[network][address];
 // };
 
-export const getZRC20Address = (network: ZetaProtocolNetwork): string => {
-  return (addresses["zevm"] as any)[network]["zrc20"];
-};
+// export const getHRC20Address = (network: HanaProtocolNetwork): string => {
+//   return (addresses["hevm"] as any)[network]["hrc20"];
+// };
 
-export const getNonZetaAddress = (address: NonZetaAddress, network: ZetaProtocolNetwork): string => {
-  return (addresses["non_zeta"] as any)[network][address];
+export const getNonHanaAddress = (address: NonHanaAddress, network: HanaProtocolNetwork): string => {
+  return (addresses["non_hana"] as any)[network][address];
 };

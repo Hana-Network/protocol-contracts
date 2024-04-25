@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
-import { ERC20_CUSTODY_ZETA_FEE, ERC20_CUSTODY_ZETA_MAX_FEE } from "lib/contracts.constants";
+import { ERC20_CUSTODY_HANA_FEE, ERC20_CUSTODY_HANA_MAX_FEE } from "lib/contracts.constants";
 
 import { calculateBestSalt } from "../../../lib/deterministic-deploy.helpers";
 import { ERC20Custody__factory } from "../../../typechain-types";
@@ -18,15 +18,15 @@ export const deterministicDeployGetSaltERC20Custody = async () => {
 
   const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS || signer.address;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const tssUpdaterAddress = getAddress("tssUpdater", network.name);
 
-  const zetaFee = ERC20_CUSTODY_ZETA_FEE;
-  const zetaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
+  const hanaFee = ERC20_CUSTODY_HANA_FEE;
+  const hanaMaxFee = ERC20_CUSTODY_HANA_MAX_FEE;
 
   const constructorTypes = ["address", "address", "uint256", "uint256", "address"];
-  const constructorArgs = [tssAddress, tssUpdaterAddress, zetaFee.toString(), zetaMaxFee.toString(), zetaTokenAddress];
+  const constructorArgs = [tssAddress, tssUpdaterAddress, hanaFee.toString(), hanaMaxFee.toString(), hanaTokenAddress];
   const contractBytecode = ERC20Custody__factory.bytecode;
 
   await calculateBestSalt(

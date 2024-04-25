@@ -1,6 +1,6 @@
-# ZetaChain Protocol Contracts
+# HanaNetwork Protocol Contracts
 
-This repository contains ZetaChain protocol contracts: Solidity source code,
+This repository contains HanaNetwork protocol contracts: Solidity source code,
 generated Go bindings, deployed contract addresses and helper utilities.
 
 ## Importing Protocol Contracts
@@ -17,40 +17,40 @@ Getting the TSS address on BSC testnet:
 ```ts
 import { getAddress } from "@zetachain/protocol-contracts";
 
-getAddress("tss", "zeta_testnet");
+getAddress("tss", "hana_testnet");
 ```
 
-Getting a ZRC-20 BSC USDT on ZetaChain Mainnet Beta:
+Getting a HRC-20 BSC USDT on HanaNetwork Mainnet Beta:
 
 ```ts
 import { getAddress } from "@zetachain/protocol-contracts";
 
-getAddress("zrc20", "zeta_mainnet", "USDT.BSC");
+getAddress("hrc20", "hana_mainnet", "USDT.BSC");
 ```
 
-The third argument (symbol) is only used when querying ZRC-20 addresses to
+The third argument (symbol) is only used when querying HRC-20 addresses to
 specify which token address is needed.
 
-To view a table of all contracts visit the [Contract Addresses](https://www.zetachain.com/docs/reference/contracts/) page in the docs.
+To view a table of all contracts visit the [Contract Addresses](https://www.hana.network/docs/reference/contracts/) page in the docs.
 
 Importing
-[`ZetaInterfaces`](https://www.zetachain.com/docs/developers/cross-chain-messaging/connector/)
-and `ZetaInteractor` for cross-chain messaging:
+[`HanaInterfaces`](https://www.hana.network/docs/developers/cross-chain-messaging/connector/)
+and `HanaInteractor` for cross-chain messaging:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/evm/interfaces/ZetaInterfaces.sol";
-import "@zetachain/protocol-contracts/contracts/evm/tools/ZetaInteractor.sol";
+import "@zetachain/protocol-contracts/contracts/evm/interfaces/HanaInterfaces.sol";
+import "@zetachain/protocol-contracts/contracts/evm/tools/HanaInteractor.sol";
 ```
 
-Importing [ZRC20](https://www.zetachain.com/docs/developers/tokens/zrc20/)
+Importing [HRC20](https://www.hana.network/docs/developers/tokens/hrc20/)
 and the [system
-contract](https://www.zetachain.com/docs/developers/omnichain/system-contract/)
+contract](https://www.hana.network/docs/developers/omnichain/system-contract/)
 for omni-chain smart contracts:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/zevm/interfaces/IZRC20.sol";
-import "@zetachain/protocol-contracts/contracts/zevm/interfaces/zContract.sol";
-import "@zetachain/protocol-contracts/contracts/zevm/SystemContract.sol";
+import "@zetachain/protocol-contracts/contracts/hevm/interfaces/IHRC20.sol";
+import "@zetachain/protocol-contracts/contracts/hevm/interfaces/hContract.sol";
+import "@zetachain/protocol-contracts/contracts/hevm/SystemContract.sol";
 ```
 
 ## Prerequisites for Development

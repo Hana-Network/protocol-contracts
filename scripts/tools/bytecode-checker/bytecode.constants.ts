@@ -1,6 +1,6 @@
 export const ETHERSCAN_API_ENDPOINT = "https://api.etherscan.io";
 export const BSC_ETHERSCAN_API_ENDPOINT = "https://api.bscscan.com";
-export const ZETA_NODE_ENDPOINT = "http://100.71.167.102:8545";
+export const HANA_NODE_ENDPOINT = "http://100.71.167.102:8545";
 
 export const etherscanApiKey = process.env.ETHERSCAN_API_KEY;
 export const bscEtherscanApiKey = process.env.BSCSCAN_API_KEY;

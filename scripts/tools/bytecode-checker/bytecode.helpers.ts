@@ -9,7 +9,7 @@ import {
   bscEtherscanApiKey,
   ETHERSCAN_API_ENDPOINT,
   etherscanApiKey,
-  ZETA_NODE_ENDPOINT,
+  HANA_NODE_ENDPOINT,
 } from "./bytecode.constants";
 
 export const encodeNumber = (weiValue: BigNumber) => {
@@ -53,9 +53,9 @@ export const findDiff = (codeA: string, codeB: string) => {
   }
 };
 
-export const getZetaNodeBytecode = async (contractAddress: string) => {
+export const getHanaNodeBytecode = async (contractAddress: string) => {
   try {
-    const provider = new ethers.providers.JsonRpcProvider(ZETA_NODE_ENDPOINT);
+    const provider = new ethers.providers.JsonRpcProvider(HANA_NODE_ENDPOINT);
     const bytecode = await provider.getCode(contractAddress);
     return bytecode;
   } catch (error) {
@@ -80,7 +80,7 @@ export const removeImmutableNumber = (bytecode: string, pattern: string) => {
   return bytecode;
 };
 
-export const getDeployedBytecode = async (contract: string, kind: "evm" | "zevm") => {
+export const getDeployedBytecode = async (contract: string, kind: "evm" | "hevm") => {
   try {
     const filePath = path.join(__dirname, `../../../artifacts/contracts/${kind}/${contract}.json`);
     const fileContent = fs.readFileSync(filePath, "utf8");

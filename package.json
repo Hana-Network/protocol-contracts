@@ -1,5 +1,5 @@
 {
-  "author": "zetachain",
+  "author": "hananetwork",
   "devDependencies": {
     "@changesets/cli": "^2.23.1",
     "@ethersproject/abi": "^5.4.7",
@@ -15,6 +15,7 @@
     "@typechain/hardhat": "^6.1.2",
     "@types/chai": "^4.3.1",
     "@types/inquirer": "^8.2.1",
+    "@types/lodash": "^4.17.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "^17.0.25",
     "@typescript-eslint/eslint-plugin": "^5.20.0",
@@ -72,6 +73,8 @@
     "build": "yarn compile && npx del-cli dist abi && npx tsc || true && npx del-cli './dist/typechain-types/**/*.js' && npx cpx './data/**/*' dist/data && npx cpx './artifacts/contracts/**/*' ./abi && npx del-cli './abi/**/*.dbg.json'",
     "compile": "npx hardhat compile --force",
     "generate": "yarn compile && ./scripts/generate_go.sh || true && ./scripts/generate_addresses.sh && yarn lint:fix",
+    "generate:addr": "yarn compile && ./scripts/generate_addresses.sh && yarn lint:fix",
+    "generate:go": "yarn compile && ./scripts/generate_go.sh || true && yarn lint:fix",
     "lint": "npx eslint . --ext .js,.ts",
     "lint:fix": "npx eslint . --ext .js,.ts,.json --fix",
     "prepublishOnly": "yarn build",

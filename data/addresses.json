@@ -3,87 +3,113 @@
     "bsc_mainnet": {
       "connector": "0x000063A6e758D9e2f438d430108377564cf4077D",
       "erc20Custody": "0x00000fF8fA992424957F97688015814e707A0115",
+      "hanaToken": "0x0000028a2eB8346cd5c0267856aB7594B7a55308",
       "immutableCreate2Factory": "",
       "tss": "0x70e967acFcC17c3941E87562161406d41676FD83",
-      "tssUpdater": "",
-      "zetaToken": "0x0000028a2eB8346cd5c0267856aB7594B7a55308"
+      "tssUpdater": ""
     },
     "bsc_testnet": {
       "connector": "0x0000ecb8cdd25a18f12daa23f6422e07fbf8b9e1",
       "erc20Custody": "0x0000a7db254145767262c6a81a7ee1650684258e",
+      "hanaToken": "0x0000c9ec4042283e8139c74f4c64bcd1e0b9b54f",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "0xFB2fCE3CCca19F0f764Ed8aa26C62181E3dA04C5",
       "immutableCreate2Factory": "0x095a03c6a68137fE9a566bBc3e552F299d8b886d",
       "tss": "0x8531a5aB847ff5B22D855633C25ED1DA3255247e",
-      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d",
-      "zetaToken": "0x0000c9ec4042283e8139c74f4c64bcd1e0b9b54f",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": "0xFB2fCE3CCca19F0f764Ed8aa26C62181E3dA04C5"
+      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d"
     },
     "btc_mainnet": {
       "connector": "",
+      "hanaToken": "",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "",
       "immutableCreate2Factory": "",
       "tss": "bc1qm24wp577nk8aacckv8np465z3dvmu7ry45el6y",
-      "tssUpdater": "",
-      "zetaToken": "",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": ""
+      "tssUpdater": ""
     },
     "btc_testnet": {
       "connector": "",
+      "hanaToken": "",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "",
       "immutableCreate2Factory": "",
       "tss": "tb1qy9pqmk2pd9sv63g27jt8r657wy0d9ueeh0nqur",
-      "tssUpdater": "",
-      "zetaToken": "",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": ""
+      "tssUpdater": ""
     },
     "eth_mainnet": {
       "connector": "0x000007Cf399229b2f5A4D043F20E90C9C98B7C6a",
       "erc20Custody": "0x0000030Ec64DF25301d8414eE5a29588C4B0dE10",
+      "hanaToken": "0xf091867EC603A6628eD83D274E835539D82e9cc8",
       "immutableCreate2Factory": "",
       "tss": "0x70e967acFcC17c3941E87562161406d41676FD83",
-      "tssUpdater": "",
-      "zetaToken": "0xf091867EC603A6628eD83D274E835539D82e9cc8"
+      "tssUpdater": ""
     },
     "goerli_testnet": {
       "connector": "0x00005e3125aba53c5652f9f0ce1a4cf91d8b15ea",
       "erc20Custody": "0x000047f11c6e42293f433c82473532e869ce4ec5",
+      "hanaToken": "0x0000c304d2934c00db1d51995b9f6996affd17c0",
+      "hanaTokenConsumerUniV2": "0x8eAc517b92eeE82177a83851268F13109878f8c4",
+      "hanaTokenConsumerUniV3": "",
       "immutableCreate2Factory": "0x095a03c6a68137fE9a566bBc3e552F299d8b886d",
       "tss": "0x8531a5aB847ff5B22D855633C25ED1DA3255247e",
-      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d",
-      "zetaToken": "0x0000c304d2934c00db1d51995b9f6996affd17c0",
-      "zetaTokenConsumerUniV2": "0x8eAc517b92eeE82177a83851268F13109878f8c4",
-      "zetaTokenConsumerUniV3": ""
+      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d"
+    },
+    "hana_mainnet": {
+      "connector": "0x239e96c8f17C85c30100AC26F635Ea15f23E9c67",
+      "hanaToken": "0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "",
+      "immutableCreate2Factory": "",
+      "tss": "",
+      "tssUpdater": ""
+    },
+    "hana_testnet": {
+      "connector": "0x239e96c8f17C85c30100AC26F635Ea15f23E9c67",
+      "hanaToken": "0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "",
+      "immutableCreate2Factory": "",
+      "tss": "0x7c125C1d515b8945841b3d5144a060115C58725F",
+      "tssUpdater": "0x7274d1d5dddef36aac53dd45b93487ce01ef0a55"
     },
     "mumbai_testnet": {
       "connector": "0x0000ecb8cdd25a18f12daa23f6422e07fbf8b9e1",
       "erc20Custody": "0x0000a7db254145767262c6a81a7ee1650684258e",
+      "hanaToken": "0x0000c9ec4042283e8139c74f4c64bcd1e0b9b54f",
+      "hanaTokenConsumerUniV2": "",
+      "hanaTokenConsumerUniV3": "0x7e792f3736751e168864106AdbAC50152641A927",
       "immutableCreate2Factory": "0x095a03c6a68137fE9a566bBc3e552F299d8b886d",
       "tss": "0x8531a5aB847ff5B22D855633C25ED1DA3255247e",
-      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d",
-      "zetaToken": "0x0000c9ec4042283e8139c74f4c64bcd1e0b9b54f",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": "0x7e792f3736751e168864106AdbAC50152641A927"
-    },
-    "zeta_mainnet": {
-      "connector": "0x239e96c8f17C85c30100AC26F635Ea15f23E9c67",
-      "immutableCreate2Factory": "",
-      "tss": "",
-      "tssUpdater": "",
-      "zetaToken": "0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": ""
-    },
-    "zeta_testnet": {
-      "connector": "0x239e96c8f17C85c30100AC26F635Ea15f23E9c67",
-      "immutableCreate2Factory": "",
-      "tss": "0x7c125C1d515b8945841b3d5144a060115C58725F",
-      "tssUpdater": "0x7274d1d5dddef36aac53dd45b93487ce01ef0a55",
-      "zetaToken": "0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf",
-      "zetaTokenConsumerUniV2": "",
-      "zetaTokenConsumerUniV3": ""
+      "tssUpdater": "0x55122f7590164Ac222504436943FAB17B62F5d7d"
     }
   },
-  "non_zeta": {
+  "hevm": {
+    "bsc_testnet": {
+      "hrc20": "0xd97B1de3619ed2c6BEb3860147E30cA8A7dC9891"
+    },
+    "btc_testnet": {
+      "hrc20": "0x65a45c57636f9BcCeD4fe193A602008578BcA90b"
+    },
+    "goerli_testnet": {
+      "hrc20": "0x13A0c5930C028511Dc02665E7285134B6d11A5f4"
+    },
+    "hana_mainnet": {
+      "fungibleModule": "",
+      "systemContract": "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921",
+      "uniswapv2Factory": "",
+      "uniswapv2Router02": ""
+    },
+    "hana_testnet": {
+      "fungibleModule": "0x735b14BB79463307AAcBED86DAf3322B1e6226aB",
+      "systemContract": "0xEdf1c3275d13489aCdC6cD6eD246E72458B8795B",
+      "uniswapv2Factory": "0x9fd96203f7b22bCF72d9DCb40ff98302376cE09c",
+      "uniswapv2Router02": "0x2ca7d64A7EFE2D62A725E2B35Cf7230D6677FfEe"
+    },
+    "mumbai_testnet": {
+      "hrc20": "0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb"
+    }
+  },
+  "non_hana": {
     "bsc_mainnet": {
       "uniswapV2Factory": "",
       "uniswapV2Router02": "",
@@ -112,45 +138,19 @@
       "uniswapV3Router": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
       "weth9": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6"
     },
+    "hana_testnet": {
+      "uniswapV2Factory": "",
+      "uniswapV2Router02": "",
+      "uniswapV3Factory": "",
+      "uniswapV3Router": "",
+      "weth9": ""
+    },
     "mumbai_testnet": {
       "uniswapV2Factory": "",
       "uniswapV2Router02": "0x0000ecb8cdd25a18f12daa23f6422e07fbf8b9e1",
       "uniswapV3Factory": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
       "uniswapV3Router": "0xE592427A0AEce92De3Edee1F18E0157C05861564",
       "weth9": "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889"
-    },
-    "zeta_testnet": {
-      "uniswapV2Factory": "",
-      "uniswapV2Router02": "",
-      "uniswapV3Factory": "",
-      "uniswapV3Router": "",
-      "weth9": ""
-    }
-  },
-  "zevm": {
-    "bsc_testnet": {
-      "zrc20": "0xd97B1de3619ed2c6BEb3860147E30cA8A7dC9891"
-    },
-    "btc_testnet": {
-      "zrc20": "0x65a45c57636f9BcCeD4fe193A602008578BcA90b"
-    },
-    "goerli_testnet": {
-      "zrc20": "0x13A0c5930C028511Dc02665E7285134B6d11A5f4"
-    },
-    "mumbai_testnet": {
-      "zrc20": "0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb"
-    },
-    "zeta_mainnet": {
-      "fungibleModule": "",
-      "systemContract": "0x91d18e54DAf4F677cB28167158d6dd21F6aB3921",
-      "uniswapv2Factory": "",
-      "uniswapv2Router02": ""
-    },
-    "zeta_testnet": {
-      "fungibleModule": "0x735b14BB79463307AAcBED86DAf3322B1e6226aB",
-      "systemContract": "0xEdf1c3275d13489aCdC6cD6eD246E72458B8795B",
-      "uniswapv2Factory": "0x9fd96203f7b22bCF72d9DCb40ff98302376cE09c",
-      "uniswapv2Router02": "0x2ca7d64A7EFE2D62A725E2B35Cf7230D6677FfEe"
     }
   }
 }

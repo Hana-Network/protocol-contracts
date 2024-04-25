@@ -12,9 +12,9 @@ contract AttackerContract {
     address public victimContractAddress;
     uint256 private _victimMethod;
 
-    constructor(address victimContractAddress_, address wzeta, uint256 victimMethod) {
+    constructor(address victimContractAddress_, address whana, uint256 victimMethod) {
         victimContractAddress = victimContractAddress_;
-        IERC20(wzeta).approve(victimContractAddress, type(uint256).max);
+        IERC20(whana).approve(victimContractAddress, type(uint256).max);
         _victimMethod = victimMethod;
     }
 

@@ -1,43 +1,43 @@
 import { ethers, network } from "hardhat";
-import { getAddress, getNonZetaAddress, isProtocolNetworkName } from "lib";
+import { getAddress, getNonHanaAddress, isProtocolNetworkName } from "lib";
 
-import { ZetaTokenConsumerUniV3__factory } from "../../../typechain-types";
+import { HanaTokenConsumerUniV3__factory } from "../../../typechain-types";
 
-export async function deterministicDeployZetaConsumer() {
+export async function deterministicDeployHanaConsumer() {
   if (!isProtocolNetworkName(network.name)) {
     throw new Error(`network.name: ${network.name} isn't supported.`);
   }
   const accounts = await ethers.getSigners();
   const [signer] = accounts;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
 
-  const uniswapV3Router = getNonZetaAddress("uniswapV3Router", network.name);
-  const uniswapV3Factory = getNonZetaAddress("uniswapV3Factory", network.name);
-  const WETH9Address = getNonZetaAddress("weth9", network.name);
+  const uniswapV3Router = getNonHanaAddress("uniswapV3Router", network.name);
+  const uniswapV3Factory = getNonHanaAddress("uniswapV3Factory", network.name);
+  const WETH9Address = getNonHanaAddress("weth9", network.name);
 
-  const zetaPoolFee = 500;
+  const hanaPoolFee = 500;
   const tokenPoolFee = 3000;
 
-  console.log([zetaTokenAddress, uniswapV3Router, uniswapV3Factory, WETH9Address, zetaPoolFee, tokenPoolFee]);
+  console.log([hanaTokenAddress, uniswapV3Router, uniswapV3Factory, WETH9Address, hanaPoolFee, tokenPoolFee]);
 
-  const Factory = new ZetaTokenConsumerUniV3__factory(signer);
+  const Factory = new HanaTokenConsumerUniV3__factory(signer);
   const contract = await Factory.deploy(
-    zetaTokenAddress,
+    hanaTokenAddress,
     uniswapV3Router,
     uniswapV3Factory,
     WETH9Address,
-    zetaPoolFee,
+    hanaPoolFee,
     tokenPoolFee
   );
   await contract.deployed();
   const address = contract.address;
 
-  console.log("Deployed ZetaConsumer. Address:", address);
+  console.log("Deployed HanaConsumer. Address:", address);
 }
 
 if (!process.env.EXECUTE_PROGRAMMATICALLY) {
-  deterministicDeployZetaConsumer()
+  deterministicDeployHanaConsumer()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);

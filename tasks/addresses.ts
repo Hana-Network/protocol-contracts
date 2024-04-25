@@ -6,15 +6,16 @@ import { task } from "hardhat/config";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { isEqual } from "lodash";
 
-import { ZetaConnectorBase__factory } from "../typechain-types";
+import { HanaConnectorBase__factory } from "../typechain-types";
 import { ERC20Custody__factory } from "../typechain-types/factories/contracts/evm/ERC20Custody__factory";
-import { SystemContract__factory } from "../typechain-types/factories/contracts/zevm/SystemContract.sol/SystemContract__factory";
-import zeta_mainnet_addresses from "./addresses.mainnet.json";
-import zeta_testnet_addresses from "./addresses.testnet.json";
+import { SystemContract__factory } from "../typechain-types/factories/contracts/hevm/SystemContract.sol/SystemContract__factory";
+import hana_mainnet_addresses from "./addresses.mainnet.json";
+import hana_testnet_addresses from "./addresses.testnet.json";
 
 declare const hre: any;
 
 type Network = "zeta_mainnet" | "zeta_testnet";
+// type Network = "hana_mainnet" | "hana_testnet";
 
 type AddressDetails = {
   address: string;
@@ -29,10 +30,18 @@ const api = {
     evm: "https://zetachain-evm.blockpi.network/v1/rpc/public",
     rpc: "https://zetachain.blockpi.network/lcd/v1/public",
   },
+  // hana_mainnet: {
+  //   evm: "https://hananetwork-evm.blockpi.network/v1/rpc/public",
+  //   rpc: "https://hananetwork.blockpi.network/lcd/v1/public",
+  // },
   zeta_testnet: {
     evm: "https://zetachain-athens-evm.blockpi.network/v1/rpc/public",
     rpc: "https://zetachain-athens.blockpi.network/lcd/v1/public",
   },
+  // hana_testnet: {
+  //   evm: "https://hananetwork-sakura-evm.blockpi.network/v1/rpc/public",
+  //   rpc: "https://hananetwork-sakura.blockpi.network/lcd/v1/public",
+  // },
 };
 
 const fetchChains = async (network: Network) => {
@@ -77,7 +86,7 @@ const fetchTssData = async (chains: any, addresses: any, network: Network) => {
 };
 
 const fetchSystemContract = async (addresses: any, network: Network) => {
-  const chain_id = network === "zeta_mainnet" ? 7000 : 7001;
+  const chain_id = network === "zeta_mainnet" ? 8787 : 8788;
   const URL = `${api[network].rpc}/zeta-chain/fungible/system_contract`;
   try {
     const systemContractResponse: AxiosResponse<any> = await axios.get(URL);
@@ -106,7 +115,7 @@ const fetchSystemContract = async (addresses: any, network: Network) => {
 };
 
 const fetchForeignCoinsData = async (chains: any, addresses: any, network: Network) => {
-  const chain_id = network === "zeta_mainnet" ? 7000 : 7001;
+  const chain_id = network === "zeta_mainnet" ? 8787 : 8788;
   const URL = `${api[network].rpc}/zeta-chain/fungible/foreign_coins`;
   try {
     const foreignCoinsResponse: AxiosResponse<any> = await axios.get(URL);
@@ -135,7 +144,7 @@ const fetchForeignCoinsData = async (chains: any, addresses: any, network: Netwo
 };
 
 const fetchAthensAddresses = async (addresses: any, hre: any, network: Network) => {
-  const chain_id = network === "zeta_mainnet" ? 7000 : 7001;
+  const chain_id = network === "zeta_mainnet" ? 8787 : 8788;
   const systemContract = addresses.find((a: any) => {
     return a.chain_name === network && a.type === "systemContract";
   })?.address;
@@ -148,7 +157,7 @@ const fetchAthensAddresses = async (addresses: any, hre: any, network: Network) 
   };
   try {
     addresses.push({ ...common, address: await sc.uniswapv2FactoryAddress(), type: "uniswapV2Factory" });
-    addresses.push({ ...common, address: await sc.wZetaContractAddress(), type: "zetaToken" });
+    addresses.push({ ...common, address: await sc.wHanaContractAddress(), type: "zetaToken" });
     addresses.push({ ...common, address: await sc.uniswapv2Router02Address(), type: "uniswapV2Router02" });
     // addresses.push({ ...common, address: await sc.zetaConnectorZEVMAddress(), type: "zetaConnectorZEVM" });
     addresses.push({ ...common, address: await sc.FUNGIBLE_MODULE_ADDRESS(), type: "fungibleModule" });
@@ -163,14 +172,14 @@ const fetchChainSpecificAddresses = async (chains: any, addresses: any, network:
       return axios
         .get(`${api[network].rpc}/zeta-chain/observer/get_chain_params_for_chain/${chain.chain_id}`)
         .then(({ data }) => {
-          const zetaToken = data.chain_params.zeta_token_contract_address;
-          if (zetaToken && zetaToken != "0x0000000000000000000000000000000000000000") {
+          const hanaToken = data.chain_params.hana_token_contract_address;
+          if (hanaToken && hanaToken != "0x0000000000000000000000000000000000000000") {
             addresses.push({
-              address: zetaToken,
+              address: hanaToken,
               category: "messaging",
               chain_id: parseInt(chain.chain_id),
               chain_name: chain.chain_name,
-              type: "zetaToken",
+              type: "hanaToken",
             });
           }
           const connector = data.chain_params.connector_contract_address;
@@ -230,10 +239,10 @@ const fetchPauser = async (chains: any, addresses: any) => {
         return a.chain_name === chain.chain_name && a.type === "connector";
       })?.address;
       if (erc20Custody) {
-        if (["18332", "8332", "7001", "7000"].includes(chain.chain_id)) return;
+        if (["18332", "8332", "8788", "8787"].includes(chain.chain_id)) return;
         const rpc = getEndpoints("evm", chain.chain_name)[0]?.url;
         const provider = new hre.ethers.providers.JsonRpcProvider(rpc);
-        const connector = ZetaConnectorBase__factory.connect(erc20Custody, provider);
+        const connector = HanaConnectorBase__factory.connect(erc20Custody, provider);
         return connector.pauserAddress().then((address: string) => {
           addresses.push({
             address,
@@ -248,7 +257,7 @@ const fetchPauser = async (chains: any, addresses: any) => {
   );
 };
 
-const fetchFactoryV2 = async (addresses: any, hre: HardhatRuntimeEnvironment, network: Network) => {
+const fetchFactoryV2 = async (addresses: any, hre: any, network: Network) => {
   const routers = addresses.filter((a: any) => a.type === "uniswapV2Router02");
 
   for (const router of routers) {
@@ -260,8 +269,8 @@ const fetchFactoryV2 = async (addresses: any, hre: HardhatRuntimeEnvironment, ne
       const wethAddress = await routerContract.WETH();
       const factoryAddress = await routerContract.factory();
 
-      // Skip ZetaChain as we've already added ZETA token
-      if (router.chain_id !== 7000 && router.chain_id !== 7001) {
+      // Skip HanaNetwork as we've already added HANA token
+      if (router.chain_id !== 8787 && router.chain_id !== 8788) {
         addresses.push({
           address: wethAddress,
           category: "messaging",
@@ -284,7 +293,7 @@ const fetchFactoryV2 = async (addresses: any, hre: HardhatRuntimeEnvironment, ne
   }
 };
 
-const fetchFactoryV3 = async (addresses: any, hre: HardhatRuntimeEnvironment, network: Network) => {
+const fetchFactoryV3 = async (addresses: any, hre: any, network: Network) => {
   const routers = addresses.filter((a: any) => a.type === "uniswapV3Router");
 
   for (const router of routers) {
@@ -326,9 +335,9 @@ const main = async (args: any, hre: HardhatRuntimeEnvironment) => {
 
   const n = hre.network.name;
   if (n === "zeta_testnet") {
-    addresses.push(...zeta_testnet_addresses);
+    addresses.push(...hana_testnet_addresses);
   } else if (n === "zeta_mainnet") {
-    addresses.push(...zeta_mainnet_addresses);
+    addresses.push(...hana_mainnet_addresses);
   } else {
     throw new Error(`Unsupported network: ${n}. Must be 'zeta_testnet' or 'zeta_mainnet'.`);
   }

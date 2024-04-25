@@ -1,24 +1,24 @@
 import {
+  HanaConnectorBase,
+  HanaConnectorBase__factory as HanaConnectorBaseFactory,
+  HanaConnectorEth,
+  HanaConnectorEth__factory as HanaConnectorEthFactory,
+  HanaConnectorNonEth,
+  HanaConnectorNonEth__factory as HanaConnectorNonEthFactory,
+  HanaEth,
+  HanaEth__factory as HanaEthFactory,
+  HanaInteractorMock,
+  HanaInteractorMock__factory as HanaInteractorMockFactory,
+  HanaNonEth,
+  HanaNonEth__factory as HanaNonEthFactory,
+  HanaReceiverMock,
+  HanaReceiverMock__factory as HanaReceiverMockFactory,
+  HanaTokenConsumerUniV2,
+  HanaTokenConsumerUniV2__factory as HanaTokenConsumerUniV2Factory,
+  HanaTokenConsumerUniV3,
+  HanaTokenConsumerUniV3__factory as HanaTokenConsumerUniV3Factory,
   ImmutableCreate2Factory,
   ImmutableCreate2Factory__factory,
-  ZetaConnectorBase,
-  ZetaConnectorBase__factory as ZetaConnectorBaseFactory,
-  ZetaConnectorEth,
-  ZetaConnectorEth__factory as ZetaConnectorEthFactory,
-  ZetaConnectorNonEth,
-  ZetaConnectorNonEth__factory as ZetaConnectorNonEthFactory,
-  ZetaEth,
-  ZetaEth__factory as ZetaEthFactory,
-  ZetaInteractorMock,
-  ZetaInteractorMock__factory as ZetaInteractorMockFactory,
-  ZetaNonEth,
-  ZetaNonEth__factory as ZetaNonEthFactory,
-  ZetaReceiverMock,
-  ZetaReceiverMock__factory as ZetaReceiverMockFactory,
-  ZetaTokenConsumerUniV2,
-  ZetaTokenConsumerUniV2__factory as ZetaTokenConsumerUniV2Factory,
-  ZetaTokenConsumerUniV3,
-  ZetaTokenConsumerUniV3__factory as ZetaTokenConsumerUniV3Factory,
 } from "@typechain-types";
 import { BaseContract, ContractFactory } from "ethers";
 import { ethers } from "hardhat";
@@ -26,68 +26,68 @@ import { ethers } from "hardhat";
 export const isEthNetworkName = (networkName: string) =>
   networkName === "eth-localnet" || networkName === "goerli_testnet" || networkName === "eth_mainnet";
 
-export const deployZetaConnectorBase = async ({ args }: { args: Parameters<ZetaConnectorBaseFactory["deploy"]> }) => {
-  const Factory = (await ethers.getContractFactory("ZetaConnectorBase")) as ZetaConnectorBaseFactory;
+export const deployHanaConnectorBase = async ({ args }: { args: Parameters<HanaConnectorBaseFactory["deploy"]> }) => {
+  const Factory = (await ethers.getContractFactory("HanaConnectorBase")) as HanaConnectorBaseFactory;
 
-  const zetaConnectorContract = (await Factory.deploy(...args)) as ZetaConnectorBase;
+  const hanaConnectorContract = (await Factory.deploy(...args)) as HanaConnectorBase;
 
-  await zetaConnectorContract.deployed();
+  await hanaConnectorContract.deployed();
 
-  return zetaConnectorContract;
+  return hanaConnectorContract;
 };
 
-export const deployZetaConnectorEth = async ({ args }: { args: Parameters<ZetaConnectorEthFactory["deploy"]> }) => {
-  const Factory = (await ethers.getContractFactory("ZetaConnectorEth")) as ZetaConnectorEthFactory;
+export const deployHanaConnectorEth = async ({ args }: { args: Parameters<HanaConnectorEthFactory["deploy"]> }) => {
+  const Factory = (await ethers.getContractFactory("HanaConnectorEth")) as HanaConnectorEthFactory;
 
-  const zetaConnectorContract = (await Factory.deploy(...args)) as ZetaConnectorEth;
+  const hanaConnectorContract = (await Factory.deploy(...args)) as HanaConnectorEth;
 
-  await zetaConnectorContract.deployed();
+  await hanaConnectorContract.deployed();
 
-  return zetaConnectorContract;
+  return hanaConnectorContract;
 };
 
-export const deployZetaConnectorNonEth = async ({
+export const deployHanaConnectorNonEth = async ({
   args,
 }: {
-  args: Parameters<ZetaConnectorNonEthFactory["deploy"]>;
+  args: Parameters<HanaConnectorNonEthFactory["deploy"]>;
 }) => {
-  const Factory = (await ethers.getContractFactory("ZetaConnectorNonEth")) as ZetaConnectorNonEthFactory;
+  const Factory = (await ethers.getContractFactory("HanaConnectorNonEth")) as HanaConnectorNonEthFactory;
 
-  const zetaConnectorContract = (await Factory.deploy(...args)) as ZetaConnectorNonEth;
+  const hanaConnectorContract = (await Factory.deploy(...args)) as HanaConnectorNonEth;
 
-  await zetaConnectorContract.deployed();
+  await hanaConnectorContract.deployed();
 
-  return zetaConnectorContract;
+  return hanaConnectorContract;
 };
 
-export const deployZetaReceiverMock = async () => {
-  const Factory = (await ethers.getContractFactory("ZetaReceiverMock")) as ZetaReceiverMockFactory;
+export const deployHanaReceiverMock = async () => {
+  const Factory = (await ethers.getContractFactory("HanaReceiverMock")) as HanaReceiverMockFactory;
 
-  const zetaReceiverMock = (await Factory.deploy()) as ZetaReceiverMock;
+  const hanaReceiverMock = (await Factory.deploy()) as HanaReceiverMock;
 
-  await zetaReceiverMock.deployed();
+  await hanaReceiverMock.deployed();
 
-  return zetaReceiverMock;
+  return hanaReceiverMock;
 };
 
-export const deployZetaEth = async ({ args }: { args: Parameters<ZetaEthFactory["deploy"]> }) => {
-  const Factory = (await ethers.getContractFactory("ZetaEth")) as ZetaEthFactory;
+export const deployHanaEth = async ({ args }: { args: Parameters<HanaEthFactory["deploy"]> }) => {
+  const Factory = (await ethers.getContractFactory("HanaEth")) as HanaEthFactory;
 
-  const zetaEthContract = (await Factory.deploy(...args)) as ZetaEth;
+  const hanaEthContract = (await Factory.deploy(...args)) as HanaEth;
 
-  await zetaEthContract.deployed();
+  await hanaEthContract.deployed();
 
-  return zetaEthContract;
+  return hanaEthContract;
 };
 
-export const deployZetaNonEth = async ({ args }: { args: Parameters<ZetaNonEthFactory["deploy"]> }) => {
-  const Factory = (await ethers.getContractFactory("ZetaNonEth")) as ZetaNonEthFactory;
+export const deployHanaNonEth = async ({ args }: { args: Parameters<HanaNonEthFactory["deploy"]> }) => {
+  const Factory = (await ethers.getContractFactory("HanaNonEth")) as HanaNonEthFactory;
 
-  const zetaNonEthContract = (await Factory.deploy(...args)) as ZetaNonEth;
+  const hanaNonEthContract = (await Factory.deploy(...args)) as HanaNonEth;
 
-  await zetaNonEthContract.deployed();
+  await hanaNonEthContract.deployed();
 
-  return zetaNonEthContract;
+  return hanaNonEthContract;
 };
 
 export const deployImmutableCreate2Factory = async () => {
@@ -100,45 +100,45 @@ export const deployImmutableCreate2Factory = async () => {
   return ImmutableCreate2FactoryContract;
 };
 
-export const getZetaConnectorEth = async (params: GetContractParams<ZetaConnectorEthFactory>) =>
-  getContract<ZetaConnectorEthFactory, ZetaConnectorEth>({
-    contractName: "ZetaConnectorEth",
+export const getHanaConnectorEth = async (params: GetContractParams<HanaConnectorEthFactory>) =>
+  getContract<HanaConnectorEthFactory, HanaConnectorEth>({
+    contractName: "HanaConnectorEth",
     ...params,
   });
 
-export const getZetaConnectorNonEth = async (params: GetContractParams<ZetaConnectorNonEthFactory>) =>
-  getContract<ZetaConnectorNonEthFactory, ZetaConnectorNonEth>({
-    contractName: "ZetaConnectorNonEth",
+export const getHanaConnectorNonEth = async (params: GetContractParams<HanaConnectorNonEthFactory>) =>
+  getContract<HanaConnectorNonEthFactory, HanaConnectorNonEth>({
+    contractName: "HanaConnectorNonEth",
     ...params,
   });
 
-export const getZetaFactoryNonEth = async (params: GetContractParams<ZetaNonEthFactory>) =>
-  await getContract<ZetaNonEthFactory, ZetaNonEth>({
-    contractName: "ZetaNonEth",
+export const getHanaFactoryNonEth = async (params: GetContractParams<HanaNonEthFactory>) =>
+  await getContract<HanaNonEthFactory, HanaNonEth>({
+    contractName: "HanaNonEth",
     ...params,
   });
 
-export const getZetaFactoryEth = async (params: GetContractParams<ZetaEthFactory>) =>
-  await getContract<ZetaEthFactory, ZetaEth>({
-    contractName: "ZetaNonEth",
+export const getHanaFactoryEth = async (params: GetContractParams<HanaEthFactory>) =>
+  await getContract<HanaEthFactory, HanaEth>({
+    contractName: "HanaNonEth",
     ...params,
   });
 
-export const getZetaInteractorMock = async (zetaToken: string) =>
-  getContract<ZetaInteractorMockFactory, ZetaInteractorMock>({
-    contractName: "ZetaInteractorMock",
-    deployParams: [zetaToken],
+export const getHanaInteractorMock = async (hanaToken: string) =>
+  getContract<HanaInteractorMockFactory, HanaInteractorMock>({
+    contractName: "HanaInteractorMock",
+    deployParams: [hanaToken],
   });
 
-export const getZetaTokenConsumerUniV2Strategy = async (params: GetContractParams<ZetaTokenConsumerUniV2Factory>) =>
-  getContract<ZetaTokenConsumerUniV2Factory, ZetaTokenConsumerUniV2>({
-    contractName: "ZetaTokenConsumerUniV2",
+export const getHanaTokenConsumerUniV2Strategy = async (params: GetContractParams<HanaTokenConsumerUniV2Factory>) =>
+  getContract<HanaTokenConsumerUniV2Factory, HanaTokenConsumerUniV2>({
+    contractName: "HanaTokenConsumerUniV2",
     ...params,
   });
 
-export const getZetaTokenConsumerUniV3Strategy = async (params: GetContractParams<ZetaTokenConsumerUniV3Factory>) =>
-  getContract<ZetaTokenConsumerUniV3Factory, ZetaTokenConsumerUniV3>({
-    contractName: "ZetaTokenConsumerUniV3",
+export const getHanaTokenConsumerUniV3Strategy = async (params: GetContractParams<HanaTokenConsumerUniV3Factory>) =>
+  getContract<HanaTokenConsumerUniV3Factory, HanaTokenConsumerUniV3>({
+    contractName: "HanaTokenConsumerUniV3",
     ...params,
   });
 

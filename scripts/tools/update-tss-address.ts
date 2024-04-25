@@ -1,7 +1,7 @@
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
 
-import { getZetaConnectorEth, getZetaConnectorNonEth, isEthNetworkName } from "../../lib/contracts.helpers";
+import { getHanaConnectorEth, getHanaConnectorNonEth, isEthNetworkName } from "../../lib/contracts.helpers";
 
 async function sendGas() {
   if (!isProtocolNetworkName(network.name)) {
@@ -17,13 +17,13 @@ async function sendGas() {
 
   if (isEthNetworkName(network.name)) {
     const contract = (
-      await getZetaConnectorEth({ deployParams: null, existingContractAddress: connectorAddress })
+      await getHanaConnectorEth({ deployParams: null, existingContractAddress: connectorAddress })
     ).connect(tssUpdaterSigner);
 
     await (await contract.updateTssAddress(newTssAddress)).wait();
   } else {
     const contract = (
-      await getZetaConnectorNonEth({ deployParams: null, existingContractAddress: connectorAddress })
+      await getHanaConnectorNonEth({ deployParams: null, existingContractAddress: connectorAddress })
     ).connect(tssUpdaterSigner);
 
     await (await contract.updateTssAddress(newTssAddress)).wait();

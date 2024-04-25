@@ -74,180 +74,180 @@
     "category": "messaging",
     "chain_id": 97,
     "chain_name": "bsc_testnet",
-    "type": "zetaToken"
+    "type": "hanaToken"
   },
   {
     "address": "0xFB2fCE3CCca19F0f764Ed8aa26C62181E3dA04C5",
     "category": "messaging",
     "chain_id": 97,
     "chain_name": "bsc_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   },
   {
     "address": "0x239e96c8f17C85c30100AC26F635Ea15f23E9c67",
     "category": "messaging",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "connector"
   },
   {
     "address": "0x735b14BB79463307AAcBED86DAf3322B1e6226aB",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "fungibleModule"
   },
   {
     "address": "0xEdf1c3275d13489aCdC6cD6eD246E72458B8795B",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "systemContract"
   },
   {
     "address": "0x9fd96203f7b22bCF72d9DCb40ff98302376cE09c",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "uniswapV2Factory"
   },
   {
     "address": "0x9fd96203f7b22bCF72d9DCb40ff98302376cE09c",
     "category": "messaging",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "uniswapV2Factory"
   },
   {
     "address": "0x2ca7d64A7EFE2D62A725E2B35Cf7230D6677FfEe",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "type": "uniswapV2Router02"
   },
   {
     "address": "0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
-    "type": "zetaToken"
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
+    "type": "hanaToken"
   },
   {
     "address": "0x05BA149A7bd6dC1F937fA9046A9e05C05f3b18b0",
     "asset": "",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "gas",
     "decimals": 18,
-    "description": "ZetaChain ZRC20 sETH-sepolia_testnet",
+    "description": "HanaNetwork HRC20 sETH-sepolia_testnet",
     "foreign_chain_id": "11155111",
     "symbol": "sETH.SEPOLIA",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x0cbe0dF132a6c6B4a2974Fa1b7Fb953CF0Cc798a",
     "asset": "0x07865c6e87b9f70255377e024ace6630c1eaa37f",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "erc20",
     "decimals": 18,
     "description": "USDC-goerli_testnet",
     "foreign_chain_id": "5",
     "symbol": "USDC",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x13A0c5930C028511Dc02665E7285134B6d11A5f4",
     "asset": "",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "gas",
     "decimals": 18,
     "description": "ETH-goerli_testnet",
     "foreign_chain_id": "5",
     "symbol": "gETH",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x48f80608B672DC30DC7e3dbBd0343c5F02C738Eb",
     "asset": "",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "gas",
     "decimals": 18,
     "description": "MATIC-mumbai_testnet",
     "foreign_chain_id": "80001",
     "symbol": "tMATIC",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x65a45c57636f9BcCeD4fe193A602008578BcA90b",
     "asset": "",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "gas",
     "decimals": 18,
     "description": "BTC-btc_testnet-btc_testnet",
     "foreign_chain_id": "18332",
     "symbol": "tBTC",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x7c8dDa80bbBE1254a7aACf3219EBe1481c6E01d7",
     "asset": "0x64544969ed7EBf5f083679233325356EbE738930",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "erc20",
     "decimals": 18,
     "description": "USDC-bsc_testnet",
     "foreign_chain_id": "97",
     "symbol": "USDC",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0x91d4F0D54090Df2D81e834c3c8CE71C6c865e79F",
     "asset": "0x9999f7fea5938fd3b1e26a12c3f2fb024e194f97",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "erc20",
     "decimals": 18,
     "description": "USDC-mumbai_testnet",
     "foreign_chain_id": "80001",
     "symbol": "USDC",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0xcC683A782f4B30c138787CB5576a86AF66fdc31d",
     "asset": "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "erc20",
     "decimals": 18,
-    "description": "ZetaChain ZRC20 USDC on SEPOLIA",
+    "description": "HanaNetwork HRC20 USDC on SEPOLIA",
     "foreign_chain_id": "11155111",
     "symbol": "USDC.SEPOLIA",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "0xd97B1de3619ed2c6BEb3860147E30cA8A7dC9891",
     "asset": "",
     "category": "omnichain",
-    "chain_id": 7001,
-    "chain_name": "zeta_testnet",
+    "chain_id": 8788,
+    "chain_name": "hana_testnet",
     "coin_type": "gas",
     "decimals": 18,
     "description": "BNB-bsc_testnet",
     "foreign_chain_id": "97",
     "symbol": "tBNB",
-    "type": "zrc20"
+    "type": "hrc20"
   },
   {
     "address": "tb1qy9pqmk2pd9sv63g27jt8r657wy0d9ueeh0nqur",
@@ -331,14 +331,14 @@
     "category": "messaging",
     "chain_id": 80001,
     "chain_name": "mumbai_testnet",
-    "type": "zetaToken"
+    "type": "hanaToken"
   },
   {
     "address": "0x7e792f3736751e168864106AdbAC50152641A927",
     "category": "messaging",
     "chain_id": 80001,
     "chain_name": "mumbai_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   },
   {
     "address": "0x3963341dad121c9CD33046089395D66eBF20Fb03",
@@ -401,13 +401,13 @@
     "category": "messaging",
     "chain_id": 11155111,
     "chain_name": "sepolia_testnet",
-    "type": "zetaToken"
+    "type": "hanaToken"
   },
   {
     "address": "0x301ED39771d8f1dD0b05F8C2D4327ce9C426E783",
     "category": "messaging",
     "chain_id": 11155111,
     "chain_name": "sepolia_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   }
 ]

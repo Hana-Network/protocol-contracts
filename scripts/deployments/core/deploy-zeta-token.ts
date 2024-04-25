@@ -2,10 +2,10 @@ import { Contract } from "ethers";
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
 
-import { ZETA_INITIAL_SUPPLY } from "../../../lib/contracts.constants";
-import { deployZetaEth, deployZetaNonEth, isEthNetworkName } from "../../../lib/contracts.helpers";
+import { HANA_INITIAL_SUPPLY } from "../../../lib/contracts.constants";
+import { deployHanaEth, deployHanaNonEth, isEthNetworkName } from "../../../lib/contracts.helpers";
 
-export async function deployZetaToken() {
+export async function deployHanaToken() {
   if (!isProtocolNetworkName(network.name)) {
     throw new Error(`network.name: ${network.name} isn't supported.`);
   }
@@ -21,15 +21,15 @@ export async function deployZetaToken() {
   let contract: Contract;
 
   if (isEthNetworkName(network.name)) {
-    contract = await deployZetaEth({
-      args: [DEPLOYER_ADDRESS, ZETA_INITIAL_SUPPLY],
+    contract = await deployHanaEth({
+      args: [DEPLOYER_ADDRESS, HANA_INITIAL_SUPPLY],
     });
   } else {
-    contract = await deployZetaNonEth({
+    contract = await deployHanaNonEth({
       args: [tssAddress, tssUpdaterAddress],
     });
   }
 
-  console.log("Deployed Zeta to:", contract.address);
+  console.log("Deployed Hana to:", contract.address);
   return contract.address;
 }
