@@ -28,9 +28,9 @@ jobs:
           tar -zxvf geth-alltools-linux-amd64-1.11.5-a38f4108.tar.gz
           sudo mv geth-alltools-linux-amd64-1.11.5-a38f4108/abigen /usr/local/bin/
 
-      - name: Generate Go packages and typechain-types
+      - name: Generate Go packages # and typechain-types # TODO remove `:go` when network config is fixed
         run: |
-          yarn generate
+          yarn generate:go
 
       - name: Check for changes
         run: |
