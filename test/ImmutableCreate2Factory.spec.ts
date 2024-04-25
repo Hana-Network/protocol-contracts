@@ -1,10 +1,10 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
+  HanaEth__factory,
+  HanaInteractorMock__factory,
   IERC20__factory,
   ImmutableCreate2Factory,
   ImmutableCreate2Factory__factory,
-  HanaEth__factory,
-  HanaInteractorMock__factory,
 } from "@typechain-types";
 import chai, { expect } from "chai";
 import { parseEther } from "ethers/lib/utils";

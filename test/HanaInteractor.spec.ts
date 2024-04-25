@@ -39,10 +39,10 @@ describe("HanaInteractor tests", () => {
       await expect(
         hanaInteractorMock.connect(hanaConnector).onHanaMessage({
           destinationAddress: crossChainContractB.address,
-          message: encoder.encode(["address"], [crossChainContractB.address]),
-          sourceChainId: chainBId,
           hanaTxSenderAddress: ethers.utils.solidityPack(["address"], [hanaInteractorMock.address]),
           hanaValue: 0,
+          message: encoder.encode(["address"], [crossChainContractB.address]),
+          sourceChainId: chainBId,
         })
       ).to.be.revertedWith("InvalidHanaMessageCall");
     });
@@ -53,10 +53,10 @@ describe("HanaInteractor tests", () => {
       await expect(
         hanaInteractorMock.onHanaMessage({
           destinationAddress: crossChainContractB.address,
-          message: encoder.encode(["address"], [hanaInteractorMock.address]),
-          sourceChainId: chainBId,
           hanaTxSenderAddress: ethers.utils.solidityPack(["address"], [hanaInteractorMock.address]),
           hanaValue: 0,
+          message: encoder.encode(["address"], [hanaInteractorMock.address]),
+          sourceChainId: chainBId,
         })
       )
         .to.be.revertedWith("InvalidCaller")
@@ -67,10 +67,10 @@ describe("HanaInteractor tests", () => {
       await expect(
         hanaInteractorMock.connect(hanaConnector).onHanaMessage({
           destinationAddress: crossChainContractB.address,
-          message: encoder.encode(["address"], [crossChainContractB.address]),
-          sourceChainId: chainBId,
           hanaTxSenderAddress: ethers.utils.solidityPack(["address"], [hanaInteractorMock.address]),
           hanaValue: 0,
+          message: encoder.encode(["address"], [crossChainContractB.address]),
+          sourceChainId: chainBId,
         })
       ).to.be.revertedWith("InvalidHanaMessageCall");
     });
@@ -82,10 +82,10 @@ describe("HanaInteractor tests", () => {
         hanaInteractorMock.onHanaRevert({
           destinationAddress: ethers.utils.solidityPack(["address"], [crossChainContractB.address]),
           destinationChainId: chainBId,
+          hanaTxSenderAddress: deployer.address,
           message: encoder.encode(["address"], [hanaInteractorMock.address]),
           remainingHanaValue: 0,
           sourceChainId: chainAId,
-          hanaTxSenderAddress: deployer.address,
         })
       )
         .to.be.revertedWith("InvalidCaller")

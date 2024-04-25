@@ -142,9 +142,9 @@ describe("HanaNonEth tests", () => {
         destinationAddress: randomSigner.address,
         destinationChainId: 1,
         destinationGasLimit: 2500000,
-        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaValueAndGas: 1000,
+        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
       });
       const receipt = await tx.wait();
 

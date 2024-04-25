@@ -1,6 +1,6 @@
 import { AddressZero } from "@ethersproject/constants";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { SystemContract, HRC20 } from "@typechain-types";
+import { HRC20, SystemContract } from "@typechain-types";
 import { expect } from "chai";
 import { parseEther } from "ethers/lib/utils";
 import { ethers } from "hardhat";

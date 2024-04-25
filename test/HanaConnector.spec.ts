@@ -196,9 +196,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("Pausable: paused");
       });
@@ -213,9 +213,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("ERC20: transfer amount exceeds balance");
       });
@@ -226,9 +226,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("ERC20: insufficient allowance");
       });
@@ -247,9 +247,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).wait();
 
@@ -267,9 +267,9 @@ describe("HanaConnector tests", () => {
           destinationAddress: randomSigner.address,
           destinationChainId: 1,
           destinationGasLimit: 2500000,
-          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaValueAndGas: 0,
+          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         });
         const receipt = await tx.wait();
         const events = await hanaConnectorEthContract.queryFilter(hanaSentFilter, receipt.blockHash);
@@ -283,9 +283,9 @@ describe("HanaConnector tests", () => {
           destinationAddress: randomSigner.address,
           destinationChainId: 1,
           destinationGasLimit: 2500000,
-          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaValueAndGas: 0,
+          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         });
 
         const receipt = await tx.wait();
@@ -495,9 +495,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("Pausable: paused");
       });
@@ -512,9 +512,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("ERC20: insufficient allowance");
       });
@@ -525,9 +525,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: 1000,
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).to.revertedWith("ERC20: insufficient allowance");
       });
@@ -543,9 +543,9 @@ describe("HanaConnector tests", () => {
             destinationAddress: randomSigner.address,
             destinationChainId: 1,
             destinationGasLimit: 2500000,
-            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
             hanaValueAndGas: parseEther("1"),
+            message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           })
         ).wait();
 
@@ -560,9 +560,9 @@ describe("HanaConnector tests", () => {
           destinationAddress: randomSigner.address,
           destinationChainId: 1,
           destinationGasLimit: 2500000,
-          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaValueAndGas: 0,
+          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         });
         const receipt = await tx.wait();
 
@@ -577,9 +577,9 @@ describe("HanaConnector tests", () => {
           destinationAddress: randomSigner.address,
           destinationChainId: 1,
           destinationGasLimit: 2500000,
-          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
           hanaValueAndGas: 0,
+          message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         });
         const receipt = await tx.wait();
 

@@ -2,12 +2,12 @@ import { MaxUint256 } from "@ethersproject/constants";
 import { parseEther, parseUnits } from "@ethersproject/units";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import {
-  IERC20,
-  IERC20__factory,
-  UniswapV2Router02__factory,
   HanaTokenConsumer,
   HanaTokenConsumerUniV2,
   HanaTokenConsumerUniV3,
+  IERC20,
+  IERC20__factory,
+  UniswapV2Router02__factory,
 } from "@typechain-types";
 import chai, { expect } from "chai";
 import { BigNumber } from "ethers";

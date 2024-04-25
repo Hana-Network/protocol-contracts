@@ -1,5 +1,5 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { WETH9, HanaConnectorHEVM, HanaReceiverMock } from "@typechain-types";
+import { HanaConnectorHEVM, HanaReceiverMock, WETH9 } from "@typechain-types";
 import { expect } from "chai";
 import { parseEther } from "ethers/lib/utils";
 import { ethers } from "hardhat";
@@ -51,9 +51,9 @@ describe("ConnectorHEVM tests", () => {
         destinationAddress: randomSigner.address,
         destinationChainId: 1,
         destinationGasLimit: 2500000,
-        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaValueAndGas: 1000,
+        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
       });
 
       // @dev: As we use the standard WETH contract, there's no error message for not enough balance
@@ -71,9 +71,9 @@ describe("ConnectorHEVM tests", () => {
         destinationAddress: randomSigner.address,
         destinationChainId: 1,
         destinationGasLimit: 2500000,
-        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaValueAndGas: 1000,
+        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
       });
 
       // @dev: As we use the standard WETH contract, there's no error message for not enough balance
@@ -87,9 +87,9 @@ describe("ConnectorHEVM tests", () => {
         destinationAddress: randomSigner.address,
         destinationChainId: 1,
         destinationGasLimit: 2500000,
-        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaValueAndGas: 0,
+        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
       });
 
       expect(tx)
@@ -108,9 +108,9 @@ describe("ConnectorHEVM tests", () => {
         destinationAddress: randomSigner.address,
         destinationChainId: 1,
         destinationGasLimit: 2500000,
-        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaParams: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
         hanaValueAndGas,
+        message: new ethers.utils.AbiCoder().encode(["string"], ["hello"]),
       });
 
       const balanceAfter = await ethers.provider.getBalance(fungibleModuleSigner.address);
