@@ -1,8 +1,8 @@
-import { ZetaProtocolNetwork } from "./address.tools";
+import { HanaProtocolNetwork } from "./address.tools";
 
 export declare type TestAddress = "dai" | "usdc";
 
-export const getTestAddress = (address: TestAddress, networkName: ZetaProtocolNetwork): string => {
+export const getTestAddress = (address: TestAddress, networkName: HanaProtocolNetwork): string => {
   if (networkName !== "eth_mainnet") throw new Error("Invalid network name");
   if (address === "dai") {
     return "0x6b175474e89094c44da98b954eedeac495271d0f";

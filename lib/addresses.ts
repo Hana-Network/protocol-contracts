@@ -7,10 +7,10 @@ import { ParamChainName, ParamSymbol, ParamType } from "./types";
 export const getAddress = (type: ParamType, network: ParamChainName, symbol?: ParamSymbol) => {
   const networks = [...testnet, ...mainnet];
   let address;
-  if (type !== "zrc20" && symbol) {
-    throw new Error("Symbol is only supported when ParamType is zrc20");
+  if (type !== "hrc20" && symbol) {
+    throw new Error("Symbol is only supported when ParamType is hrc20");
   }
-  if (type === "zrc20" && !symbol) {
+  if (type === "hrc20" && !symbol) {
     // for backwards compatibility
     const chainId = getChainId(network);
     address = networks.find((n: any) => {
