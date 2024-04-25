@@ -19,14 +19,17 @@ export type ParamChainName =
   | "btc_mainnet"
   | "btc_testnet"
   | "eth_mainnet"
+  | "hana_mainnet"
+  | "hana_testnet"
   | "mumbai_testnet"
-  | "sepolia_testnet"
-  | "zeta_mainnet"
-  | "zeta_testnet";
+  | "sepolia_testnet";
 export type ParamType =
   | "connector"
   | "erc20Custody"
   | "fungibleModule"
+  | "hanaToken"
+  | "hanaTokenConsumerUniV3"
+  | "hrc20"
   | "pauser"
   | "systemContract"
   | "tss"
@@ -35,7 +38,4 @@ export type ParamType =
   | "uniswapV2Router02"
   | "uniswapV3Factory"
   | "uniswapV3Router"
-  | "weth9"
-  | "zetaToken"
-  | "zetaTokenConsumerUniV3"
-  | "zrc20";
+  | "weth9";
