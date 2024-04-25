@@ -20,7 +20,7 @@ import { getAddress } from "@zetachain/protocol-contracts";
 getAddress("tss", "hana_testnet");
 ```
 
-Getting a ZRC-20 BSC USDT on HanaNetwork Mainnet Beta:
+Getting a HRC-20 BSC USDT on HanaNetwork Mainnet Beta:
 
 ```ts
 import { getAddress } from "@zetachain/protocol-contracts";
@@ -28,7 +28,7 @@ import { getAddress } from "@zetachain/protocol-contracts";
 getAddress("hrc20", "hana_mainnet", "USDT.BSC");
 ```
 
-The third argument (symbol) is only used when querying ZRC-20 addresses to
+The third argument (symbol) is only used when querying HRC-20 addresses to
 specify which token address is needed.
 
 To view a table of all contracts visit the [Contract Addresses](https://www.hana.network/docs/reference/contracts/) page in the docs.
