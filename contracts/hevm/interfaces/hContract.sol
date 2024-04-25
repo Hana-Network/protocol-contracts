@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
-struct zContext {
+struct hContext {
     bytes origin;
     address sender;
     uint256 chainID;
 }
 
-interface zContract {
+interface hContract {
     function onCrossChainCall(
-        zContext calldata context,
-        address zrc20,
+        hContext calldata context,
+        address hrc20,
         uint256 amount,
         bytes calldata message
     ) external;

@@ -5,15 +5,15 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
 
 import "./interfaces/ConnectorErrors.sol";
-import "./interfaces/ZetaInterfaces.sol";
+import "./interfaces/HanaInterfaces.sol";
 
 /**
- * @dev Main abstraction of ZetaConnector.
+ * @dev Main abstraction of HanaConnector.
  * This contract manages interactions between TSS and different chains.
- * There's an instance of this contract on each chain supported by ZetaChain.
+ * There's an instance of this contract on each chain supported by HanaNetwork.
  */
-contract ZetaConnectorBase is ConnectorErrors, Pausable {
-    address public immutable zetaToken;
+contract HanaConnectorBase is ConnectorErrors, Pausable {
+    address public immutable hanaToken;
 
     /**
      * @dev Multisig contract to pause incoming transactions.
@@ -22,7 +22,7 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
     address public pauserAddress;
 
     /**
-     * @dev Collectively held by ZetaChain validators.
+     * @dev Collectively held by HanaNetwork validators.
      */
     address public tssAddress;
 
@@ -31,32 +31,32 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
      */
     address public tssAddressUpdater;
 
-    event ZetaSent(
+    event HanaSent(
         address sourceTxOriginAddress,
-        address indexed zetaTxSenderAddress,
+        address indexed hanaTxSenderAddress,
         uint256 indexed destinationChainId,
         bytes destinationAddress,
-        uint256 zetaValueAndGas,
+        uint256 hanaValueAndGas,
         uint256 destinationGasLimit,
         bytes message,
-        bytes zetaParams
+        bytes hanaParams
     );
 
-    event ZetaReceived(
-        bytes zetaTxSenderAddress,
+    event HanaReceived(
+        bytes hanaTxSenderAddress,
         uint256 indexed sourceChainId,
         address indexed destinationAddress,
-        uint256 zetaValue,
+        uint256 hanaValue,
         bytes message,
         bytes32 indexed internalSendHash
     );
 
-    event ZetaReverted(
-        address zetaTxSenderAddress,
+    event HanaReverted(
+        address hanaTxSenderAddress,
         uint256 sourceChainId,
         uint256 indexed destinationChainId,
         bytes destinationAddress,
-        uint256 remainingZetaValue,
+        uint256 remainingHanaValue,
         bytes message,
         bytes32 indexed internalSendHash
     );
@@ -69,19 +69,19 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
 
     /**
      * @dev Constructor requires initial addresses.
-     * zetaToken address is the only immutable one, while others can be updated.
+     * hanaToken address is the only immutable one, while others can be updated.
      */
-    constructor(address zetaToken_, address tssAddress_, address tssAddressUpdater_, address pauserAddress_) {
+    constructor(address hanaToken_, address tssAddress_, address tssAddressUpdater_, address pauserAddress_) {
         if (
-            zetaToken_ == address(0) ||
+            hanaToken_ == address(0) ||
             tssAddress_ == address(0) ||
             tssAddressUpdater_ == address(0) ||
             pauserAddress_ == address(0)
         ) {
-            revert ZetaCommonErrors.InvalidAddress();
+            revert HanaCommonErrors.InvalidAddress();
         }
 
-        zetaToken = zetaToken_;
+        hanaToken = hanaToken_;
         tssAddress = tssAddress_;
         tssAddressUpdater = tssAddressUpdater_;
         pauserAddress = pauserAddress_;
@@ -115,7 +115,7 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
      * @dev Update the pauser address. The only address allowed to do that is the current pauser.
      */
     function updatePauserAddress(address pauserAddress_) external onlyPauser {
-        if (pauserAddress_ == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (pauserAddress_ == address(0)) revert HanaCommonErrors.InvalidAddress();
 
         pauserAddress = pauserAddress_;
 
@@ -127,7 +127,7 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
      */
     function updateTssAddress(address tssAddress_) external {
         if (msg.sender != tssAddress && msg.sender != tssAddressUpdater) revert CallerIsNotTssOrUpdater(msg.sender);
-        if (tssAddress_ == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (tssAddress_ == address(0)) revert HanaCommonErrors.InvalidAddress();
 
         tssAddress = tssAddress_;
 
@@ -135,10 +135,10 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
     }
 
     /**
-     * @dev Changes the ownership of tssAddressUpdater to be the one held by the ZetaChain TSS Signer nodes.
+     * @dev Changes the ownership of tssAddressUpdater to be the one held by the HanaNetwork TSS Signer nodes.
      */
     function renounceTssAddressUpdater() external onlyTssUpdater {
-        if (tssAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (tssAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
 
         tssAddressUpdater = tssAddress;
         emit TSSAddressUpdaterUpdated(msg.sender, tssAddressUpdater);
@@ -161,19 +161,19 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
     }
 
     /**
-     * @dev Entrypoint to send data and value through ZetaChain.
+     * @dev Entrypoint to send data and value through HanaNetwork.
      */
-    function send(ZetaInterfaces.SendInput calldata input) external virtual {}
+    function send(HanaInterfaces.SendInput calldata input) external virtual {}
 
     /**
      * @dev Handler to receive data from other chain.
      * This method can be called only by TSS. Access validation is in implementation.
      */
     function onReceive(
-        bytes calldata zetaTxSenderAddress,
+        bytes calldata hanaTxSenderAddress,
         uint256 sourceChainId,
         address destinationAddress,
-        uint256 zetaValue,
+        uint256 hanaValue,
         bytes calldata message,
         bytes32 internalSendHash
     ) external virtual {}
@@ -183,11 +183,11 @@ contract ZetaConnectorBase is ConnectorErrors, Pausable {
      * This method can be called only by TSS. Access validation is in implementation.
      */
     function onRevert(
-        address zetaTxSenderAddress,
+        address hanaTxSenderAddress,
         uint256 sourceChainId,
         bytes calldata destinationAddress,
         uint256 destinationChainId,
-        uint256 remainingZetaValue,
+        uint256 remainingHanaValue,
         bytes calldata message,
         bytes32 internalSendHash
     ) external virtual {}

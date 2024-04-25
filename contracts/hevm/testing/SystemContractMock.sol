@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.7;
 
-import "../interfaces/zContract.sol";
-import "../interfaces/IZRC20.sol";
+import "../interfaces/hContract.sol";
+import "../interfaces/IHRC20.sol";
 
 interface SystemContractErrors {
     error CallerIsNotFungibleModule();
@@ -16,21 +16,21 @@ interface SystemContractErrors {
 
 contract SystemContractMock is SystemContractErrors {
     mapping(uint256 => uint256) public gasPriceByChainId;
-    mapping(uint256 => address) public gasCoinZRC20ByChainId;
-    mapping(uint256 => address) public gasZetaPoolByChainId;
+    mapping(uint256 => address) public gasCoinHRC20ByChainId;
+    mapping(uint256 => address) public gasHanaPoolByChainId;
 
-    address public wZetaContractAddress;
+    address public wHanaContractAddress;
     address public uniswapv2FactoryAddress;
     address public uniswapv2Router02Address;
 
     event SystemContractDeployed();
     event SetGasPrice(uint256, uint256);
     event SetGasCoin(uint256, address);
-    event SetGasZetaPool(uint256, address);
-    event SetWZeta(address);
+    event SetGasHanaPool(uint256, address);
+    event SetWHana(address);
 
-    constructor(address wzeta_, address uniswapv2Factory_, address uniswapv2Router02_) {
-        wZetaContractAddress = wzeta_;
+    constructor(address whana_, address uniswapv2Factory_, address uniswapv2Router02_) {
+        wHanaContractAddress = whana_;
         uniswapv2FactoryAddress = uniswapv2Factory_;
         uniswapv2Router02Address = uniswapv2Router02_;
         emit SystemContractDeployed();
@@ -42,14 +42,14 @@ contract SystemContractMock is SystemContractErrors {
         emit SetGasPrice(chainID, price);
     }
 
-    function setGasCoinZRC20(uint256 chainID, address zrc20) external {
-        gasCoinZRC20ByChainId[chainID] = zrc20;
-        emit SetGasCoin(chainID, zrc20);
+    function setGasCoinHRC20(uint256 chainID, address hrc20) external {
+        gasCoinHRC20ByChainId[chainID] = hrc20;
+        emit SetGasCoin(chainID, hrc20);
     }
 
-    function setWZETAContractAddress(address addr) external {
-        wZetaContractAddress = addr;
-        emit SetWZeta(wZetaContractAddress);
+    function setWHANAContractAddress(address addr) external {
+        wHanaContractAddress = addr;
+        emit SetWHana(wHanaContractAddress);
     }
 
     // returns sorted token addresses, used to handle return values from pairs sorted in this order
@@ -77,9 +77,9 @@ contract SystemContractMock is SystemContractErrors {
         );
     }
 
-    function onCrossChainCall(address target, address zrc20, uint256 amount, bytes calldata message) external {
-        zContext memory context = zContext({sender: msg.sender, origin: "", chainID: block.chainid});
-        IZRC20(zrc20).transfer(target, amount);
-        zContract(target).onCrossChainCall(context, zrc20, amount, message);
+    function onCrossChainCall(address target, address hrc20, uint256 amount, bytes calldata message) external {
+        hContext memory context = hContext({sender: msg.sender, origin: "", chainID: block.chainid});
+        IHRC20(hrc20).transfer(target, amount);
+        hContract(target).onCrossChainCall(context, hrc20, amount, message);
     }
 }

@@ -7,9 +7,9 @@ import "@uniswap/v3-periphery/contracts/interfaces/ISwapRouter.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Factory.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 
-import "../interfaces/ZetaInterfaces.sol";
+import "../interfaces/HanaInterfaces.sol";
 
-interface ZetaTokenConsumerUniV3Errors {
+interface HanaTokenConsumerUniV3Errors {
     error InputCantBeZero();
 
     error ErrorSendingETH();
@@ -51,17 +51,17 @@ interface ISwapRouterPancake is IUniswapV3SwapCallback {
 }
 
 /**
- * @dev Uniswap V3 strategy for ZetaTokenConsumer
+ * @dev Uniswap V3 strategy for HanaTokenConsumer
  */
-contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3Errors {
+contract HanaTokenConsumerPancakeV3 is HanaTokenConsumer, HanaTokenConsumerUniV3Errors {
     using SafeERC20 for IERC20;
     uint256 internal constant MAX_DEADLINE = 200;
 
-    uint24 public immutable zetaPoolFee;
+    uint24 public immutable hanaPoolFee;
     uint24 public immutable tokenPoolFee;
 
     address public immutable WETH9Address;
-    address public immutable zetaToken;
+    address public immutable hanaToken;
 
     ISwapRouterPancake public immutable pancakeV3Router;
     IUniswapV3Factory public immutable uniswapV3Factory;
@@ -69,25 +69,25 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
     bool internal _locked;
 
     constructor(
-        address zetaToken_,
+        address hanaToken_,
         address pancakeV3Router_,
         address uniswapV3Factory_,
         address WETH9Address_,
-        uint24 zetaPoolFee_,
+        uint24 hanaPoolFee_,
         uint24 tokenPoolFee_
     ) {
         if (
-            zetaToken_ == address(0) ||
+            hanaToken_ == address(0) ||
             pancakeV3Router_ == address(0) ||
             uniswapV3Factory_ == address(0) ||
             WETH9Address_ == address(0)
-        ) revert ZetaCommonErrors.InvalidAddress();
+        ) revert HanaCommonErrors.InvalidAddress();
 
-        zetaToken = zetaToken_;
+        hanaToken = hanaToken_;
         pancakeV3Router = ISwapRouterPancake(pancakeV3Router_);
         uniswapV3Factory = IUniswapV3Factory(uniswapV3Factory_);
         WETH9Address = WETH9Address_;
-        zetaPoolFee = zetaPoolFee_;
+        hanaPoolFee = hanaPoolFee_;
         tokenPoolFee = tokenPoolFee_;
     }
 
@@ -100,17 +100,17 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
 
     receive() external payable {}
 
-    function getZetaFromEth(
+    function getHanaFromEth(
         address destinationAddress,
         uint256 minAmountOut
     ) external payable override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (msg.value == 0) revert InputCantBeZero();
 
         ISwapRouterPancake.ExactInputSingleParams memory params = ISwapRouterPancake.ExactInputSingleParams({
             tokenIn: WETH9Address,
-            tokenOut: zetaToken,
-            fee: zetaPoolFee,
+            tokenOut: hanaToken,
+            fee: hanaPoolFee,
             recipient: destinationAddress,
             amountIn: msg.value,
             amountOutMinimum: minAmountOut,
@@ -119,24 +119,24 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
 
         uint256 amountOut = pancakeV3Router.exactInputSingle{value: msg.value}(params);
 
-        emit EthExchangedForZeta(msg.value, amountOut);
+        emit EthExchangedForHana(msg.value, amountOut);
         return amountOut;
     }
 
-    function getZetaFromToken(
+    function getHanaFromToken(
         address destinationAddress,
         uint256 minAmountOut,
         address inputToken,
         uint256 inputTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0) || inputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0) || inputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (inputTokenAmount == 0) revert InputCantBeZero();
 
         IERC20(inputToken).safeTransferFrom(msg.sender, address(this), inputTokenAmount);
         IERC20(inputToken).safeApprove(address(pancakeV3Router), inputTokenAmount);
 
         ISwapRouterPancake.ExactInputParams memory params = ISwapRouterPancake.ExactInputParams({
-            path: abi.encodePacked(inputToken, tokenPoolFee, WETH9Address, zetaPoolFee, zetaToken),
+            path: abi.encodePacked(inputToken, tokenPoolFee, WETH9Address, hanaPoolFee, hanaToken),
             recipient: destinationAddress,
             amountIn: inputTokenAmount,
             amountOutMinimum: minAmountOut
@@ -144,27 +144,27 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
 
         uint256 amountOut = pancakeV3Router.exactInput(params);
 
-        emit TokenExchangedForZeta(inputToken, inputTokenAmount, amountOut);
+        emit TokenExchangedForHana(inputToken, inputTokenAmount, amountOut);
         return amountOut;
     }
 
-    function getEthFromZeta(
+    function getEthFromHana(
         address destinationAddress,
         uint256 minAmountOut,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(pancakeV3Router), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(pancakeV3Router), hanaTokenAmount);
 
         ISwapRouterPancake.ExactInputSingleParams memory params = ISwapRouterPancake.ExactInputSingleParams({
-            tokenIn: zetaToken,
+            tokenIn: hanaToken,
             tokenOut: WETH9Address,
-            fee: zetaPoolFee,
+            fee: hanaPoolFee,
             recipient: address(this),
-            amountIn: zetaTokenAmount,
+            amountIn: hanaTokenAmount,
             amountOutMinimum: minAmountOut,
             sqrtPriceLimitX96: 0
         });
@@ -173,7 +173,7 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
 
         WETH9(WETH9Address).withdraw(amountOut);
 
-        emit ZetaExchangedForEth(zetaTokenAmount, amountOut);
+        emit HanaExchangedForEth(hanaTokenAmount, amountOut);
 
         (bool sent, ) = destinationAddress.call{value: amountOut}("");
         if (!sent) revert ErrorSendingETH();
@@ -181,33 +181,33 @@ contract ZetaTokenConsumerPancakeV3 is ZetaTokenConsumer, ZetaTokenConsumerUniV3
         return amountOut;
     }
 
-    function getTokenFromZeta(
+    function getTokenFromHana(
         address destinationAddress,
         uint256 minAmountOut,
         address outputToken,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override nonReentrant returns (uint256) {
-        if (destinationAddress == address(0) || outputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0) || outputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(pancakeV3Router), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(pancakeV3Router), hanaTokenAmount);
 
         ISwapRouterPancake.ExactInputParams memory params = ISwapRouterPancake.ExactInputParams({
-            path: abi.encodePacked(zetaToken, zetaPoolFee, WETH9Address, tokenPoolFee, outputToken),
+            path: abi.encodePacked(hanaToken, hanaPoolFee, WETH9Address, tokenPoolFee, outputToken),
             recipient: destinationAddress,
-            amountIn: zetaTokenAmount,
+            amountIn: hanaTokenAmount,
             amountOutMinimum: minAmountOut
         });
 
         uint256 amountOut = pancakeV3Router.exactInput(params);
 
-        emit ZetaExchangedForToken(outputToken, zetaTokenAmount, amountOut);
+        emit HanaExchangedForToken(outputToken, hanaTokenAmount, amountOut);
         return amountOut;
     }
 
-    function hasZetaLiquidity() external view override returns (bool) {
-        address poolAddress = uniswapV3Factory.getPool(WETH9Address, zetaToken, zetaPoolFee);
+    function hasHanaLiquidity() external view override returns (bool) {
+        address poolAddress = uniswapV3Factory.getPool(WETH9Address, hanaToken, hanaPoolFee);
 
         if (poolAddress == address(0)) {
             return false;

@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /// @title ERC20Custody.
-/// @notice ERC20Custody for depositing ERC20 assets into ZetaChain and making operations with them.
+/// @notice ERC20Custody for depositing ERC20 assets into HanaNetwork and making operations with them.
 contract ERC20Custody is ReentrancyGuard {
     using SafeERC20 for IERC20;
 
@@ -17,21 +17,21 @@ contract ERC20Custody is ReentrancyGuard {
     error InvalidTSSUpdater();
     error ZeroAddress();
     error IsPaused();
-    error ZetaMaxFeeExceeded();
+    error HanaMaxFeeExceeded();
     error ZeroFee();
 
     /// @notice If custody operations are paused.
     bool public paused;
-    /// @notice TSSAddress is the TSS address collectively possessed by Zeta blockchain validators.
+    /// @notice TSSAddress is the TSS address collectively possessed by Hana blockchain validators.
     address public TSSAddress;
     /// @notice Threshold Signature Scheme (TSS) [GG20] is a multi-sig ECDSA/EdDSA protocol.
     address public TSSAddressUpdater;
-    /// @notice Current zeta fee for depositing funds into ZetaChain.
-    uint256 public zetaFee;
-    /// @notice Maximum zeta fee for transaction.
-    uint256 public immutable zetaMaxFee;
-    /// @notice Zeta ERC20 token .
-    IERC20 public immutable zeta;
+    /// @notice Current hana fee for depositing funds into HanaNetwork.
+    uint256 public hanaFee;
+    /// @notice Maximum hana fee for transaction.
+    uint256 public immutable hanaMaxFee;
+    /// @notice Hana ERC20 token .
+    IERC20 public immutable hana;
     /// @notice Mapping of whitelisted token => true/false.
     mapping(IERC20 => bool) public whitelisted;
 
@@ -43,7 +43,7 @@ contract ERC20Custody is ReentrancyGuard {
     event Withdrawn(address indexed recipient, IERC20 indexed asset, uint256 amount);
     event RenouncedTSSUpdater(address TSSAddressUpdater_);
     event UpdatedTSSAddress(address TSSAddress_);
-    event UpdatedZetaFee(uint256 zetaFee_);
+    event UpdatedHanaFee(uint256 hanaFee_);
 
     /**
      * @dev Only TSS address allowed modifier.
@@ -65,16 +65,16 @@ contract ERC20Custody is ReentrancyGuard {
         _;
     }
 
-    constructor(address TSSAddress_, address TSSAddressUpdater_, uint256 zetaFee_, uint256 zetaMaxFee_, IERC20 zeta_) {
+    constructor(address TSSAddress_, address TSSAddressUpdater_, uint256 hanaFee_, uint256 hanaMaxFee_, IERC20 hana_) {
         TSSAddress = TSSAddress_;
         TSSAddressUpdater = TSSAddressUpdater_;
-        zetaFee = zetaFee_;
-        zeta = zeta_;
-        zetaMaxFee = zetaMaxFee_;
+        hanaFee = hanaFee_;
+        hana = hana_;
+        hanaMaxFee = hanaMaxFee_;
     }
 
     /**
-     * @dev Update the TSSAddress in case of Zeta blockchain validator nodes churn.
+     * @dev Update the TSSAddress in case of Hana blockchain validator nodes churn.
      * @param TSSAddress_, new tss address.
      */
     function updateTSSAddress(address TSSAddress_) external onlyTSSUpdater {
@@ -86,23 +86,23 @@ contract ERC20Custody is ReentrancyGuard {
     }
 
     /**
-     * @dev Update zeta fee
-     * @param zetaFee_, new zeta fee
+     * @dev Update hana fee
+     * @param hanaFee_, new hana fee
      */
-    function updateZetaFee(uint256 zetaFee_) external onlyTSS {
-        if (zetaFee_ == 0) {
+    function updateHanaFee(uint256 hanaFee_) external onlyTSS {
+        if (hanaFee_ == 0) {
             revert ZeroFee();
         }
-        if (zetaFee_ > zetaMaxFee) {
-            revert ZetaMaxFeeExceeded();
+        if (hanaFee_ > hanaMaxFee) {
+            revert HanaMaxFeeExceeded();
         }
-        zetaFee = zetaFee_;
-        emit UpdatedZetaFee(zetaFee_);
+        hanaFee = hanaFee_;
+        emit UpdatedHanaFee(hanaFee_);
     }
 
     /**
-     * @dev Change the ownership of TSSAddressUpdater to the Zeta blockchain TSS nodes.
-     * Effectively, only Zeta blockchain validators collectively can update TSSAddress afterwards.
+     * @dev Change the ownership of TSSAddressUpdater to the Hana blockchain TSS nodes.
+     * Effectively, only Hana blockchain validators collectively can update TSSAddress afterwards.
      */
     function renounceTSSAddressUpdater() external onlyTSSUpdater {
         if (TSSAddress == address(0)) {
@@ -156,7 +156,7 @@ contract ERC20Custody is ReentrancyGuard {
     }
 
     /**
-     * @dev Deposit asset amount to recipient with message that encodes additional zetachain evm call or message.
+     * @dev Deposit asset amount to recipient with message that encodes additional hananetwork evm call or message.
      * @param recipient, recipient address.
      * @param asset, ERC20 asset.
      * @param amount, asset amount.
@@ -174,8 +174,8 @@ contract ERC20Custody is ReentrancyGuard {
         if (!whitelisted[asset]) {
             revert NotWhitelisted();
         }
-        if (zetaFee != 0 && address(zeta) != address(0)) {
-            zeta.safeTransferFrom(msg.sender, TSSAddress, zetaFee);
+        if (hanaFee != 0 && address(hana) != address(0)) {
+            hana.safeTransferFrom(msg.sender, TSSAddress, hanaFee);
         }
         uint256 oldBalance = asset.balanceOf(address(this));
         asset.safeTransferFrom(msg.sender, address(this), amount);

@@ -3,29 +3,29 @@ pragma solidity 0.8.7;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-import "./ZetaConnector.base.sol";
-import "./interfaces/ZetaInterfaces.sol";
-import "./interfaces/ZetaNonEthInterface.sol";
+import "./HanaConnector.base.sol";
+import "./interfaces/HanaInterfaces.sol";
+import "./interfaces/HanaNonEthInterface.sol";
 
 /**
- * @dev Non ETH implementation of ZetaConnector.
+ * @dev Non ETH implementation of HanaConnector.
  * This contract manages interactions between TSS and different chains.
  * This version is for every chain but Etherum network because in the other chains we mint and burn and in Etherum we lock and unlock
  */
-contract ZetaConnectorNonEth is ZetaConnectorBase {
+contract HanaConnectorNonEth is HanaConnectorBase {
     uint256 public maxSupply = 2 ** 256 - 1;
 
     event MaxSupplyUpdated(address callerAddress, uint256 newMaxSupply);
 
     constructor(
-        address zetaTokenAddress_,
+        address hanaTokenAddress_,
         address tssAddress_,
         address tssAddressUpdater_,
         address pauserAddress_
-    ) ZetaConnectorBase(zetaTokenAddress_, tssAddress_, tssAddressUpdater_, pauserAddress_) {}
+    ) HanaConnectorBase(hanaTokenAddress_, tssAddress_, tssAddressUpdater_, pauserAddress_) {}
 
     function getLockedAmount() external view returns (uint256) {
-        return ZetaNonEthInterface(zetaToken).balanceOf(address(this));
+        return HanaNonEthInterface(hanaToken).balanceOf(address(this));
     }
 
     function setMaxSupply(uint256 maxSupply_) external onlyTssAddress {
@@ -37,85 +37,85 @@ contract ZetaConnectorNonEth is ZetaConnectorBase {
      * @dev Entry point to send data to protocol
      * This call burn the token and emit an event with all the data needed by the protocol
      */
-    function send(ZetaInterfaces.SendInput calldata input) external override whenNotPaused {
-        ZetaNonEthInterface(zetaToken).burnFrom(msg.sender, input.zetaValueAndGas);
+    function send(HanaInterfaces.SendInput calldata input) external override whenNotPaused {
+        HanaNonEthInterface(hanaToken).burnFrom(msg.sender, input.hanaValueAndGas);
 
-        emit ZetaSent(
+        emit HanaSent(
             tx.origin,
             msg.sender,
             input.destinationChainId,
             input.destinationAddress,
-            input.zetaValueAndGas,
+            input.hanaValueAndGas,
             input.destinationGasLimit,
             input.message,
-            input.zetaParams
+            input.hanaParams
         );
     }
 
     /**
      * @dev Handler to receive data from other chain.
      * This method can be called only by TSS.
-     * Transfer the Zeta tokens to destination and calls onZetaMessage if it's needed.
+     * Transfer the Hana tokens to destination and calls onHanaMessage if it's needed.
      * To perform the transfer mint new tokens, validating first the maxSupply allowed in the current chain.
      */
     function onReceive(
-        bytes calldata zetaTxSenderAddress,
+        bytes calldata hanaTxSenderAddress,
         uint256 sourceChainId,
         address destinationAddress,
-        uint256 zetaValue,
+        uint256 hanaValue,
         bytes calldata message,
         bytes32 internalSendHash
     ) external override onlyTssAddress {
-        if (zetaValue + ZetaNonEthInterface(zetaToken).totalSupply() > maxSupply) revert ExceedsMaxSupply(maxSupply);
-        ZetaNonEthInterface(zetaToken).mint(destinationAddress, zetaValue, internalSendHash);
+        if (hanaValue + HanaNonEthInterface(hanaToken).totalSupply() > maxSupply) revert ExceedsMaxSupply(maxSupply);
+        HanaNonEthInterface(hanaToken).mint(destinationAddress, hanaValue, internalSendHash);
 
         if (message.length > 0) {
-            ZetaReceiver(destinationAddress).onZetaMessage(
-                ZetaInterfaces.ZetaMessage(zetaTxSenderAddress, sourceChainId, destinationAddress, zetaValue, message)
+            HanaReceiver(destinationAddress).onHanaMessage(
+                HanaInterfaces.HanaMessage(hanaTxSenderAddress, sourceChainId, destinationAddress, hanaValue, message)
             );
         }
 
-        emit ZetaReceived(zetaTxSenderAddress, sourceChainId, destinationAddress, zetaValue, message, internalSendHash);
+        emit HanaReceived(hanaTxSenderAddress, sourceChainId, destinationAddress, hanaValue, message, internalSendHash);
     }
 
     /**
      * @dev Handler to receive errors from other chain.
      * This method can be called only by TSS.
-     * Transfer the Zeta tokens to destination and calls onZetaRevert if it's needed.
+     * Transfer the Hana tokens to destination and calls onHanaRevert if it's needed.
      * To perform the transfer mint new tokens, validating first the maxSupply allowed in the current chain.
      */
     function onRevert(
-        address zetaTxSenderAddress,
+        address hanaTxSenderAddress,
         uint256 sourceChainId,
         bytes calldata destinationAddress,
         uint256 destinationChainId,
-        uint256 remainingZetaValue,
+        uint256 remainingHanaValue,
         bytes calldata message,
         bytes32 internalSendHash
     ) external override whenNotPaused onlyTssAddress {
-        if (remainingZetaValue + ZetaNonEthInterface(zetaToken).totalSupply() > maxSupply)
+        if (remainingHanaValue + HanaNonEthInterface(hanaToken).totalSupply() > maxSupply)
             revert ExceedsMaxSupply(maxSupply);
-        ZetaNonEthInterface(zetaToken).mint(zetaTxSenderAddress, remainingZetaValue, internalSendHash);
+        HanaNonEthInterface(hanaToken).mint(hanaTxSenderAddress, remainingHanaValue, internalSendHash);
 
         if (message.length > 0) {
-            ZetaReceiver(zetaTxSenderAddress).onZetaRevert(
-                ZetaInterfaces.ZetaRevert(
-                    zetaTxSenderAddress,
+            HanaReceiver(hanaTxSenderAddress).onHanaRevert(
+                HanaInterfaces.HanaRevert(
+                    hanaTxSenderAddress,
                     sourceChainId,
                     destinationAddress,
                     destinationChainId,
-                    remainingZetaValue,
+                    remainingHanaValue,
                     message
                 )
             );
         }
 
-        emit ZetaReverted(
-            zetaTxSenderAddress,
+        emit HanaReverted(
+            hanaTxSenderAddress,
             sourceChainId,
             destinationChainId,
             destinationAddress,
-            remainingZetaValue,
+            remainingHanaValue,
             message,
             internalSendHash
         );
