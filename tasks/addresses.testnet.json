@@ -4,21 +4,21 @@
     "category": "messaging",
     "chain_id": 80001,
     "chain_name": "mumbai_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   },
   {
     "address": "0xFB2fCE3CCca19F0f764Ed8aa26C62181E3dA04C5",
     "category": "messaging",
     "chain_id": 97,
     "chain_name": "bsc_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   },
   {
     "address": "0x301ED39771d8f1dD0b05F8C2D4327ce9C426E783",
     "category": "messaging",
     "chain_id": 11155111,
     "chain_name": "sepolia_testnet",
-    "type": "zetaTokenConsumerUniV3"
+    "type": "hanaTokenConsumerUniV3"
   },
   {
     "address": "0x8954AfA98594b838bda56FE4C12a09D7739D179b",
