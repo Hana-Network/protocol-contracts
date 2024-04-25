@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
 
-import { ERC20_CUSTODY_ZETA_FEE, ERC20_CUSTODY_ZETA_MAX_FEE, getSaltNumber } from "../../../lib/contracts.constants";
+import { ERC20_CUSTODY_HANA_FEE, ERC20_CUSTODY_HANA_MAX_FEE, getSaltNumber } from "../../../lib/contracts.constants";
 import {
   deployContractToAddress,
   saltToHex,
@@ -20,22 +20,22 @@ export const deterministicDeployERC20Custody = async () => {
 
   const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS || signer.address;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const tssUpdaterAddress = getAddress("tssUpdater", network.name);
   const immutableCreate2FactoryAddress = getAddress("immutableCreate2Factory", network.name);
 
-  const saltNumber = getSaltNumber("zetaERC20Custody", network.name);
+  const saltNumber = getSaltNumber("hanaERC20Custody", network.name);
   const saltStr = BigNumber.from(saltNumber).toHexString();
 
-  const zetaFee = ERC20_CUSTODY_ZETA_FEE;
-  const zetaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
+  const hanaFee = ERC20_CUSTODY_HANA_FEE;
+  const hanaMaxFee = ERC20_CUSTODY_HANA_MAX_FEE;
 
   const salthex = saltToHex(saltStr, DEPLOYER_ADDRESS);
   console.log("SaltHex:", salthex);
 
   const constructorTypes = ["address", "address", "uint256", "uint256", "address"];
-  const constructorArgs = [tssAddress, tssUpdaterAddress, zetaFee.toString(), zetaMaxFee.toString(), zetaTokenAddress];
+  const constructorArgs = [tssAddress, tssUpdaterAddress, hanaFee.toString(), hanaMaxFee.toString(), hanaTokenAddress];
   const contractBytecode = ERC20Custody__factory.bytecode;
 
   const { address } = await deployContractToAddress({

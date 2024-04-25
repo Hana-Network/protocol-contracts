@@ -8,9 +8,9 @@ import {
   deployContractToAddress,
   saltToHex,
 } from "../../../lib/ImmutableCreate2Factory/ImmutableCreate2Factory.helpers";
-import { ZetaConnectorEth__factory, ZetaConnectorNonEth__factory } from "../../../typechain-types";
+import { HanaConnectorEth__factory, HanaConnectorNonEth__factory } from "../../../typechain-types";
 
-export const deterministicDeployZetaConnector = async () => {
+export const deterministicDeployHanaConnector = async () => {
   if (!isProtocolNetworkName(network.name)) {
     throw new Error(`network.name: ${network.name} isn't supported.`);
   }
@@ -21,23 +21,23 @@ export const deterministicDeployZetaConnector = async () => {
 
   const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS || signer.address;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const tssUpdaterAddress = getAddress("tssUpdater", network.name);
   const immutableCreate2FactoryAddress = getAddress("immutableCreate2Factory", network.name);
 
-  const saltNumber = getSaltNumber("zetaConnector", network.name);
+  const saltNumber = getSaltNumber("hanaConnector", network.name);
   const saltStr = BigNumber.from(saltNumber).toHexString();
 
   const salthex = saltToHex(saltStr, DEPLOYER_ADDRESS);
   const constructorTypes = ["address", "address", "address", "address"];
-  const constructorArgs = [zetaTokenAddress, tssAddress, tssUpdaterAddress, tssUpdaterAddress];
+  const constructorArgs = [hanaTokenAddress, tssAddress, tssUpdaterAddress, tssUpdaterAddress];
 
   let contractBytecode;
   if (isEthNetworkName(network.name)) {
-    contractBytecode = ZetaConnectorEth__factory.bytecode;
+    contractBytecode = HanaConnectorEth__factory.bytecode;
   } else {
-    contractBytecode = ZetaConnectorNonEth__factory.bytecode;
+    contractBytecode = HanaConnectorNonEth__factory.bytecode;
   }
 
   const { address } = await deployContractToAddress({
@@ -50,7 +50,7 @@ export const deterministicDeployZetaConnector = async () => {
   });
 
   const finalBalance = await signer.getBalance();
-  console.log("Deployed ZetaConnector. Address:", address);
+  console.log("Deployed HanaConnector. Address:", address);
   console.log("Constructor Args", constructorArgs);
   console.log("ETH spent:", initialBalance.sub(finalBalance).toString());
 
@@ -58,7 +58,7 @@ export const deterministicDeployZetaConnector = async () => {
 };
 
 if (!process.env.EXECUTE_PROGRAMMATICALLY) {
-  deterministicDeployZetaConnector()
+  deterministicDeployHanaConnector()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);
