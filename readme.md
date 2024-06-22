@@ -73,7 +73,7 @@ to the `artifacts` directory.
 To generate Go bindings for the Solidity contracts, run the following command:
 
 ```
-yarn generate:go
+yarn generate
 ```
 
 This will use `abigen` to generate Go bindings for the contracts and output the

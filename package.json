@@ -70,9 +70,8 @@
   "scripts": {
     "build": "yarn clean && yarn compile && npx del-cli dist abi && tsc || exit 0 && npx del-cli './dist/typechain-types/**/*.js' && npx cpx './data/**/*' dist/data && npx cpx './artifacts/contracts/**/*' ./abi && npx del-cli './abi/**/*.dbg.json'",
     "clean": "npx hardhat clean",
-    "compile": "npx hardhat compile",
-    "generate:go": "yarn compile && ./scripts/generate_go.sh",
-    "generate:interfaces": "yarn clean && yarn compile",
+    "compile": "yarn clean && npx hardhat compile",
+    "generate": "yarn compile && ./scripts/generate_go.sh",
     "lint": "npx eslint . --ext .js,.ts",
     "lint:fix": "npx eslint . --ext .js,.ts,.json --fix",
     "prepublishOnly": "yarn build",
@@ -80,5 +79,5 @@
     "tsc:watch": "npx tsc --watch"
   },
   "types": "./dist/lib/index.d.ts",
-  "version": "0.0.7"
+  "version": "0.0.8"
 }

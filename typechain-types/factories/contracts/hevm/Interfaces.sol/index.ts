@@ -4,4 +4,3 @@
 export { IHRC20__factory } from "./IHRC20__factory";
 export { IHRC20Metadata__factory } from "./IHRC20Metadata__factory";
 export { ISystem__factory } from "./ISystem__factory";
-export { HContract__factory } from "./HContract__factory";

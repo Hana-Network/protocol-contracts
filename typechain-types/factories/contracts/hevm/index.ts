@@ -5,5 +5,5 @@ export * as connectorHevmSol from "./ConnectorHEVM.sol";
 export * as hrc20Sol from "./HRC20.sol";
 export * as interfacesSol from "./Interfaces.sol";
 export * as systemContractSol from "./SystemContract.sol";
-export * as whanaSol from "./WHANA.sol";
+export * as wzetaSol from "./WZETA.sol";
 export * as interfaces from "./interfaces";

@@ -46,16 +46,6 @@ interface IHRC20 {
     event UpdatedProtocolFlatFee(uint256 protocolFlatFee);
 }
 
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
 interface IHRC20Metadata is IHRC20 {
     function name() external view returns (string memory);
 
@@ -69,12 +59,4 @@ enum CoinType {
     Hana,
     Gas,
     ERC20
-}
-
-/**
- * @dev Any HanaNetwork Contract must implement this interface to allow SystemContract to interact with.
- * This is only required if the contract wants to interact with other chains.
- */
-interface hContract {
-    function onCrossChainCall(address hrc20, uint256 amount, bytes calldata message) external;
 }

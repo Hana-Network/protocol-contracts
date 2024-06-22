@@ -1,4 +1,4 @@
-name: Generated Go Packages are Updated
+name: Generated Files are Updated
 on:
   pull_request:
     branches:
@@ -28,10 +28,15 @@ jobs:
           tar -zxvf geth-alltools-linux-amd64-1.11.5-a38f4108.tar.gz
           sudo mv geth-alltools-linux-amd64-1.11.5-a38f4108/abigen /usr/local/bin/
 
-      - name: Generate Go packages
+      - name: Generate Go packages and typechain-types
         run: |
-          yarn generate:go
+          yarn generate
 
       - name: Check for changes
         run: |
-          git diff --exit-code --ignore-space-change --ignore-all-space --ignore-cr-at-eol -- pkg
+          if git diff --exit-code --ignore-space-change --ignore-all-space --ignore-cr-at-eol -- pkg typechain-types; then
+            echo "Generated Go files are up-to-date."
+          else
+            echo "::error::Generated files are not up-to-date. Please run 'yarn generate' locally and commit any changes."
+            exit 1
+          fi

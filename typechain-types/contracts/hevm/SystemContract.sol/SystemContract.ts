@@ -27,10 +27,22 @@ import type {
   PromiseOrValue,
 } from "../../../common";
 
+export type HContextStruct = {
+  origin: PromiseOrValue<BytesLike>;
+  sender: PromiseOrValue<string>;
+  chainID: PromiseOrValue<BigNumberish>;
+};
+
+export type HContextStructOutput = [string, string, BigNumber] & {
+  origin: string;
+  sender: string;
+  chainID: BigNumber;
+};
+
 export interface SystemContractInterface extends utils.Interface {
   functions: {
     "FUNGIBLE_MODULE_ADDRESS()": FunctionFragment;
-    "depositAndCall(address,uint256,address,bytes)": FunctionFragment;
+    "depositAndCall((bytes,address,uint256),address,uint256,address,bytes)": FunctionFragment;
     "gasCoinHRC20ByChainId(uint256)": FunctionFragment;
     "gasHanaPoolByChainId(uint256)": FunctionFragment;
     "gasPriceByChainId(uint256)": FunctionFragment;
@@ -72,6 +84,7 @@ export interface SystemContractInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "depositAndCall",
     values: [
+      HContextStruct,
       PromiseOrValue<string>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<string>,
@@ -303,6 +316,7 @@ export interface SystemContract extends BaseContract {
     FUNGIBLE_MODULE_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
 
     depositAndCall(
+      context: HContextStruct,
       hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       target: PromiseOrValue<string>,
@@ -372,6 +386,7 @@ export interface SystemContract extends BaseContract {
   FUNGIBLE_MODULE_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
   depositAndCall(
+    context: HContextStruct,
     hrc20: PromiseOrValue<string>,
     amount: PromiseOrValue<BigNumberish>,
     target: PromiseOrValue<string>,
@@ -441,6 +456,7 @@ export interface SystemContract extends BaseContract {
     FUNGIBLE_MODULE_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
     depositAndCall(
+      context: HContextStruct,
       hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       target: PromiseOrValue<string>,
@@ -540,6 +556,7 @@ export interface SystemContract extends BaseContract {
     FUNGIBLE_MODULE_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositAndCall(
+      context: HContextStruct,
       hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       target: PromiseOrValue<string>,
@@ -612,6 +629,7 @@ export interface SystemContract extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     depositAndCall(
+      context: HContextStruct,
       hrc20: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       target: PromiseOrValue<string>,
