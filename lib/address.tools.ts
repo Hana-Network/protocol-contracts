@@ -86,5 +86,5 @@ export const getZRC20Address = (network: ZetaProtocolNetwork): string => {
 };
 
 export const getNonZetaAddress = (address: NonZetaAddress, network: ZetaProtocolNetwork): string => {
-  return addresses["non-zeta"][network][address];
+  return addresses["non_zeta"][network][address];
 };
