@@ -1,4 +1,4 @@
-module github.com/zeta-chain/protocol-contracts
+module github.com/hana-network/protocol-contracts
 
 go 1.19
 
