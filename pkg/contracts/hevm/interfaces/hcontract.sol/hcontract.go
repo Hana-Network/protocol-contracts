@@ -29,9 +29,16 @@ var (
 	_ = abi.ConvertType
 )
 
+// HContext is an auto generated low-level Go binding around an user-defined struct.
+type HContext struct {
+	Origin  []byte
+	Sender  common.Address
+	ChainID *big.Int
+}
+
 // HContractMetaData contains all meta data concerning the HContract contract.
 var HContractMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[{\"internalType\":\"address\",\"name\":\"hrc20\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"message\",\"type\":\"bytes\"}],\"name\":\"onCrossChainCall\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[{\"components\":[{\"internalType\":\"bytes\",\"name\":\"origin\",\"type\":\"bytes\"},{\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"chainID\",\"type\":\"uint256\"}],\"internalType\":\"structhContext\",\"name\":\"context\",\"type\":\"tuple\"},{\"internalType\":\"address\",\"name\":\"hrc20\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"bytes\",\"name\":\"message\",\"type\":\"bytes\"}],\"name\":\"onCrossChainCall\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]",
 }
 
 // HContractABI is the input ABI used to generate the binding from.
@@ -180,23 +187,23 @@ func (_HContract *HContractTransactorRaw) Transact(opts *bind.TransactOpts, meth
 	return _HContract.Contract.contract.Transact(opts, method, params...)
 }
 
-// OnCrossChainCall is a paid mutator transaction binding the contract method 0xc8522691.
+// OnCrossChainCall is a paid mutator transaction binding the contract method 0xde43156e.
 //
-// Solidity: function onCrossChainCall(address hrc20, uint256 amount, bytes message) returns()
-func (_HContract *HContractTransactor) OnCrossChainCall(opts *bind.TransactOpts, hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
-	return _HContract.contract.Transact(opts, "onCrossChainCall", hrc20, amount, message)
+// Solidity: function onCrossChainCall((bytes,address,uint256) context, address hrc20, uint256 amount, bytes message) returns()
+func (_HContract *HContractTransactor) OnCrossChainCall(opts *bind.TransactOpts, context HContext, hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
+	return _HContract.contract.Transact(opts, "onCrossChainCall", context, hrc20, amount, message)
 }
 
-// OnCrossChainCall is a paid mutator transaction binding the contract method 0xc8522691.
+// OnCrossChainCall is a paid mutator transaction binding the contract method 0xde43156e.
 //
-// Solidity: function onCrossChainCall(address hrc20, uint256 amount, bytes message) returns()
-func (_HContract *HContractSession) OnCrossChainCall(hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
-	return _HContract.Contract.OnCrossChainCall(&_HContract.TransactOpts, hrc20, amount, message)
+// Solidity: function onCrossChainCall((bytes,address,uint256) context, address hrc20, uint256 amount, bytes message) returns()
+func (_HContract *HContractSession) OnCrossChainCall(context HContext, hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
+	return _HContract.Contract.OnCrossChainCall(&_HContract.TransactOpts, context, hrc20, amount, message)
 }
 
-// OnCrossChainCall is a paid mutator transaction binding the contract method 0xc8522691.
+// OnCrossChainCall is a paid mutator transaction binding the contract method 0xde43156e.
 //
-// Solidity: function onCrossChainCall(address hrc20, uint256 amount, bytes message) returns()
-func (_HContract *HContractTransactorSession) OnCrossChainCall(hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
-	return _HContract.Contract.OnCrossChainCall(&_HContract.TransactOpts, hrc20, amount, message)
+// Solidity: function onCrossChainCall((bytes,address,uint256) context, address hrc20, uint256 amount, bytes message) returns()
+func (_HContract *HContractTransactorSession) OnCrossChainCall(context HContext, hrc20 common.Address, amount *big.Int, message []byte) (*types.Transaction, error) {
+	return _HContract.Contract.OnCrossChainCall(&_HContract.TransactOpts, context, hrc20, amount, message)
 }
