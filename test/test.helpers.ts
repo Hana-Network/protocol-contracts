@@ -1,8 +1,8 @@
-import { ZetaTokenConsumer__factory } from "@typechain-types";
+import { HanaTokenConsumer__factory } from "@typechain-types";
 import { BigNumber, ContractReceipt } from "ethers";
 
-export const parseZetaConsumerLog = (logs: ContractReceipt["logs"]) => {
-  const iface = ZetaTokenConsumer__factory.createInterface();
+export const parseHanaConsumerLog = (logs: ContractReceipt["logs"]) => {
+  const iface = HanaTokenConsumer__factory.createInterface();
 
   const eventNames = logs.map((log) => {
     try {
