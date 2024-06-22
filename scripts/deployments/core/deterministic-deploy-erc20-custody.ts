@@ -25,7 +25,7 @@ export const deterministicDeployERC20Custody = async () => {
 
   const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS || signer.address;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const tssUpdaterAddress = getAddress("tssUpdater", network.name);
   const immutableCreate2FactoryAddress = getAddress("immutableCreate2Factory", network.name);
@@ -33,14 +33,14 @@ export const deterministicDeployERC20Custody = async () => {
   const saltNumber = isEthNetworkName(network.name) ? ERC20_CUSTODY_SALT_NUMBER_ETH : ERC20_CUSTODY_SALT_NUMBER_NON_ETH;
   const saltStr = BigNumber.from(saltNumber).toHexString();
 
-  const zetaFee = ERC20_CUSTODY_ZETA_FEE;
-  const zetaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
+  const hanaFee = ERC20_CUSTODY_ZETA_FEE;
+  const hanaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
 
   const salthex = saltToHex(saltStr, DEPLOYER_ADDRESS);
   console.log("SaltHex:", salthex);
 
   const constructorTypes = ["address", "address", "uint256", "uint256", "address"];
-  const constructorArgs = [tssAddress, tssUpdaterAddress, zetaFee.toString(), zetaMaxFee.toString(), zetaTokenAddress];
+  const constructorArgs = [tssAddress, tssUpdaterAddress, hanaFee.toString(), hanaMaxFee.toString(), hanaTokenAddress];
   const contractBytecode = ERC20Custody__factory.bytecode;
 
   const { address } = await deployContractToAddress({

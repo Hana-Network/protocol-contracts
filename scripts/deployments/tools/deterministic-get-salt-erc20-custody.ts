@@ -18,15 +18,15 @@ export const deterministicDeployGetSaltERC20Custody = async () => {
 
   const DEPLOYER_ADDRESS = process.env.DEPLOYER_ADDRESS || signer.address;
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const tssUpdaterAddress = getAddress("tssUpdater", network.name);
 
-  const zetaFee = ERC20_CUSTODY_ZETA_FEE;
-  const zetaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
+  const hanaFee = ERC20_CUSTODY_ZETA_FEE;
+  const hanaMaxFee = ERC20_CUSTODY_ZETA_MAX_FEE;
 
   const constructorTypes = ["address", "address", "uint256", "uint256", "address"];
-  const constructorArgs = [tssAddress, tssUpdaterAddress, zetaFee.toString(), zetaMaxFee.toString(), zetaTokenAddress];
+  const constructorArgs = [tssAddress, tssUpdaterAddress, hanaFee.toString(), hanaMaxFee.toString(), hanaTokenAddress];
   const contractBytecode = ERC20Custody__factory.bytecode;
 
   calculateBestSalt(MAX_ITERATIONS, DEPLOYER_ADDRESS, constructorTypes, constructorArgs, contractBytecode);

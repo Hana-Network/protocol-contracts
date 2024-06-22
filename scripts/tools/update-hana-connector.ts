@@ -1,21 +1,21 @@
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
 
-import { getZetaFactoryNonEth } from "../../lib/contracts.helpers";
+import { getHanaFactoryNonEth } from "../../lib/contracts.helpers";
 
-async function updateZetaConnector() {
+async function updateHanaConnector() {
   if (!isProtocolNetworkName(network.name)) {
     throw new Error(`network.name: ${network.name} isn't supported.`);
   }
 
   const [, tssUpdaterSigner] = await ethers.getSigners();
 
-  const zetaTokenAddress = getAddress("zetaToken", network.name);
+  const hanaTokenAddress = getAddress("hanaToken", network.name);
   const tssAddress = getAddress("tss", network.name);
   const connectorAddress = getAddress("connector", network.name);
 
   const contract = (
-    await getZetaFactoryNonEth({ deployParams: null, existingContractAddress: zetaTokenAddress })
+    await getHanaFactoryNonEth({ deployParams: null, existingContractAddress: hanaTokenAddress })
   ).connect(tssUpdaterSigner);
 
   await (await contract.updateTssAndConnectorAddresses(tssAddress, connectorAddress)).wait();
@@ -24,7 +24,7 @@ async function updateZetaConnector() {
   console.log(`Updated Connector address to ${connectorAddress}.`);
 }
 
-updateZetaConnector()
+updateHanaConnector()
   .then(() => process.exit(0))
   .catch((error) => {
     console.error(error);

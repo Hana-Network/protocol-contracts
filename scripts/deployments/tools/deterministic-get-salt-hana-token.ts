@@ -5,11 +5,11 @@ import { getAddress, isProtocolNetworkName } from "lib";
 import { ZETA_INITIAL_SUPPLY } from "../../../lib/contracts.constants";
 import { isEthNetworkName } from "../../../lib/contracts.helpers";
 import { calculateBestSalt } from "../../../lib/deterministic-deploy.helpers";
-import { ZetaEth__factory, ZetaNonEth__factory } from "../../../typechain-types";
+import { HanaEth__factory, HanaNonEth__factory } from "../../../typechain-types";
 
 const MAX_ITERATIONS = BigNumber.from(1000000);
 
-export async function deterministicDeployGetSaltZetaToken() {
+export async function deterministicDeployGetSaltHanaToken() {
   if (!isProtocolNetworkName(network.name)) {
     throw new Error(`network.name: ${network.name} isn't supported.`);
   }
@@ -28,17 +28,17 @@ export async function deterministicDeployGetSaltZetaToken() {
   if (isEthNetworkName(network.name)) {
     constructorTypes = ["address", "uint256"];
     constructorArgs = [DEPLOYER_ADDRESS, ZETA_INITIAL_SUPPLY.toString()];
-    contractBytecode = ZetaEth__factory.bytecode;
+    contractBytecode = HanaEth__factory.bytecode;
   } else {
     constructorTypes = ["address", "address"];
     constructorArgs = [tssAddress, tssUpdaterAddress];
-    contractBytecode = ZetaNonEth__factory.bytecode;
+    contractBytecode = HanaNonEth__factory.bytecode;
   }
   calculateBestSalt(MAX_ITERATIONS, DEPLOYER_ADDRESS, constructorTypes, constructorArgs, contractBytecode);
 }
 
 if (!process.env.EXECUTE_PROGRAMMATICALLY) {
-  deterministicDeployGetSaltZetaToken()
+  deterministicDeployGetSaltHanaToken()
     .then(() => process.exit(0))
     .catch((error) => {
       console.error(error);

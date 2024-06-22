@@ -3,7 +3,7 @@ import { AbiCoder } from "ethers/lib/utils";
 import { ethers, network } from "hardhat";
 import { getAddress, isProtocolNetworkName } from "lib";
 
-import { ZetaConnectorEth__factory as ZetaConnectorEthFactory } from "../../typechain-types";
+import { HanaConnectorEth__factory as HanaConnectorEthFactory } from "../../typechain-types";
 
 const encoder = new AbiCoder();
 
@@ -16,7 +16,7 @@ async function main() {
 
   const connectorAddress = getAddress("connector", network.name);
 
-  const factory = (await ethers.getContractFactory("ZetaConnectorEth")) as ZetaConnectorEthFactory;
+  const factory = (await ethers.getContractFactory("HanaConnectorEth")) as HanaConnectorEthFactory;
   const contract = factory.attach(connectorAddress);
 
   console.log(`Sending To ${accounts[0].address}`);
@@ -25,9 +25,9 @@ async function main() {
       destinationAddress: encoder.encode(["address"], [accounts[0].address]),
       destinationChainId: getChainId("bsc-testnet"),
       destinationGasLimit: 1_000_000,
+      hanaParams: [],
+      hanaValueAndGas: "10000000000000000000",
       message: encoder.encode(["address"], [accounts[0].address]),
-      zetaParams: [],
-      zetaValueAndGas: "10000000000000000000",
     })
   ).wait();
   console.log("Sent");
