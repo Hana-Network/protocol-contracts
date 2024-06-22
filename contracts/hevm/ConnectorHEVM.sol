@@ -14,7 +14,7 @@ interface HanaInterfaces {
         uint256 destinationGasLimit;
         /// @dev An encoded, arbitrary message to be parsed by the destination contract
         bytes message;
-        /// @dev ZETA to be sent cross-chain + HanaNetwork gas fees + destination chain gas fees (expressed in ZETA)
+        /// @dev HANA to be sent cross-chain + HanaNetwork gas fees + destination chain gas fees (expressed in HANA)
         uint256 hanaValueAndGas;
         /// @dev Optional parameters for the HanaNetwork protocol
         bytes hanaParams;
@@ -27,7 +27,7 @@ interface HanaInterfaces {
         bytes hanaTxSenderAddress;
         uint256 sourceChainId;
         address destinationAddress;
-        /// @dev Remaining ZETA from hanaValueAndGas after subtracting HanaNetwork gas fees and destination gas fees
+        /// @dev Remaining HANA from hanaValueAndGas after subtracting HanaNetwork gas fees and destination gas fees
         uint256 hanaValue;
         bytes message;
     }
@@ -80,13 +80,13 @@ contract HanaConnectorHEVM is HanaInterfaces {
         whana = _whana;
     }
 
-    /// @dev Receive function to receive ZETA from WETH9.withdraw().
+    /// @dev Receive function to receive HANA from WETH9.withdraw().
     receive() external payable {
         if (msg.sender != whana) revert OnlyWHANA();
     }
 
     /**
-     * @dev Sends ZETA and bytes messages (to execute it) crosschain.
+     * @dev Sends HANA and bytes messages (to execute it) crosschain.
      * @param input, SendInput struct, checkout above.
      */
     function send(HanaInterfaces.SendInput calldata input) external {
@@ -108,7 +108,7 @@ contract HanaConnectorHEVM is HanaInterfaces {
     }
 
     /**
-     * @dev Sends ZETA and bytes messages (to execute it) crosschain.
+     * @dev Sends HANA and bytes messages (to execute it) crosschain.
      * @param whana_, new WHANA address.
      */
     function setWhanaAddress(address whana_) external {

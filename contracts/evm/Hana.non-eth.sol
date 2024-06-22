@@ -24,7 +24,7 @@ contract HanaNonEth is HanaNonEthInterface, ERC20Burnable, HanaErrors {
 
     event Burnt(address indexed burnee, uint256 amount);
 
-    constructor(address tssAddress_, address tssAddressUpdater_) ERC20("Hana", "ZETA") {
+    constructor(address tssAddress_, address tssAddressUpdater_) ERC20("Hana", "HANA") {
         if (tssAddress_ == address(0) || tssAddressUpdater_ == address(0)) revert InvalidAddress();
 
         tssAddress = tssAddress_;

@@ -24,7 +24,7 @@ contract SystemContract is SystemContractErrors {
     mapping(uint256 => uint256) public gasPriceByChainId;
     /// @notice Map to know the HRC20 address of a token given a chain id, ex zETH, zBNB etc.
     mapping(uint256 => address) public gasCoinHRC20ByChainId;
-    // @dev: Map to know uniswap V2 pool of ZETA/HRC20 given a chain id. This refer to the build in uniswap deployed at genesis.
+    // @dev: Map to know uniswap V2 pool of HANA/HRC20 given a chain id. This refer to the build in uniswap deployed at genesis.
     mapping(uint256 => address) public gasHanaPoolByChainId;
 
     /// @notice Fungible address is always the same, it's on protocol level.
@@ -32,7 +32,7 @@ contract SystemContract is SystemContractErrors {
     /// @notice Uniswap V2 addresses.
     address public immutable uniswapv2FactoryAddress;
     address public immutable uniswapv2Router02Address;
-    /// @notice Address of the wrapped ZETA to interact with Uniswap V2.
+    /// @notice Address of the wrapped HANA to interact with Uniswap V2.
     address public wHanaContractAddress;
     /// @notice Address of HEVM Hana Connector.
     address public hanaConnectorHEVMAddress;
@@ -150,7 +150,7 @@ contract SystemContract is SystemContractErrors {
     }
 
     /**
-     * @dev Setter for wrapped ZETA address.
+     * @dev Setter for wrapped HANA address.
      * @param addr, whana new address.
      */
     function setWHANAContractAddress(address addr) external {
