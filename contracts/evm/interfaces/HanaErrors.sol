@@ -4,7 +4,7 @@ pragma solidity 0.8.7;
 /**
  * @dev Common custom errors
  */
-interface ZetaErrors {
+interface HanaErrors {
     // @dev Thrown when caller is not the address defined as TSS address
     error CallerIsNotTss(address caller);
 
@@ -20,6 +20,6 @@ interface ZetaErrors {
     // @dev Thrown when a contract receives an invalid address param, mostly zero address validation
     error InvalidAddress();
 
-    // @dev Thrown when Zeta can't be transferred for some reason
-    error ZetaTransferError();
+    // @dev Thrown when Hana can't be transferred for some reason
+    error HanaTranserError();
 }

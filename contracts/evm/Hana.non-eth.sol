@@ -3,20 +3,20 @@ pragma solidity 0.8.7;
 
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-import "./interfaces/ZetaErrors.sol";
+import "./interfaces/HanaErrors.sol";
 
-import "./interfaces/ZetaNonEthInterface.sol";
+import "./interfaces/HanaNonEthInterface.sol";
 
-contract ZetaNonEth is ZetaNonEthInterface, ERC20Burnable, ZetaErrors {
+contract HanaNonEth is HanaNonEthInterface, ERC20Burnable, HanaErrors {
     address public connectorAddress;
 
     /**
-     * @dev Collectively held by Zeta blockchain validators
+     * @dev Collectively held by Hana blockchain validators
      */
     address public tssAddress;
 
     /**
-     * @dev Initially a multi-sig, eventually held by Zeta blockchain validators (via renounceTssAddressUpdater)
+     * @dev Initially a multi-sig, eventually held by Hana blockchain validators (via renounceTssAddressUpdater)
      */
     address public tssAddressUpdater;
 
@@ -24,7 +24,7 @@ contract ZetaNonEth is ZetaNonEthInterface, ERC20Burnable, ZetaErrors {
 
     event Burnt(address indexed burnee, uint256 amount);
 
-    constructor(address tssAddress_, address tssAddressUpdater_) ERC20("Zeta", "ZETA") {
+    constructor(address tssAddress_, address tssAddressUpdater_) ERC20("Hana", "ZETA") {
         if (tssAddress_ == address(0) || tssAddressUpdater_ == address(0)) revert InvalidAddress();
 
         tssAddress = tssAddress_;
@@ -60,7 +60,7 @@ contract ZetaNonEth is ZetaNonEthInterface, ERC20Burnable, ZetaErrors {
         emit Minted(mintee, value, internalSendHash);
     }
 
-    function burnFrom(address account, uint256 amount) public override(ZetaNonEthInterface, ERC20Burnable) {
+    function burnFrom(address account, uint256 amount) public override(HanaNonEthInterface, ERC20Burnable) {
         /**
          * @dev Only Connector can burn.
          */

@@ -5,42 +5,42 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-import "../interfaces/ZetaInterfaces.sol";
+import "../interfaces/HanaInterfaces.sol";
 
-interface ZetaTokenConsumerUniV2Errors {
+interface HanaTokenConsumerUniV2Errors {
     error InputCantBeZero();
 }
 
 /**
- * @dev Uniswap V2 strategy for ZetaTokenConsumer
+ * @dev Uniswap V2 strategy for HanaTokenConsumer
  */
-contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Errors {
+contract HanaTokenConsumerUniV2 is HanaTokenConsumer, HanaTokenConsumerUniV2Errors {
     using SafeERC20 for IERC20;
     uint256 internal constant MAX_DEADLINE = 200;
 
     address internal immutable wETH;
-    address public immutable zetaToken;
+    address public immutable hanaToken;
 
     IUniswapV2Router02 internal immutable uniswapV2Router;
 
-    constructor(address zetaToken_, address uniswapV2Router_) {
-        if (zetaToken_ == address(0) || uniswapV2Router_ == address(0)) revert ZetaCommonErrors.InvalidAddress();
+    constructor(address hanaToken_, address uniswapV2Router_) {
+        if (hanaToken_ == address(0) || uniswapV2Router_ == address(0)) revert HanaCommonErrors.InvalidAddress();
 
-        zetaToken = zetaToken_;
+        hanaToken = hanaToken_;
         uniswapV2Router = IUniswapV2Router02(uniswapV2Router_);
         wETH = IUniswapV2Router02(uniswapV2Router_).WETH();
     }
 
-    function getZetaFromEth(
+    function getHanaFromEth(
         address destinationAddress,
         uint256 minAmountOut
     ) external payable override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (msg.value == 0) revert InputCantBeZero();
 
         address[] memory path = new address[](2);
         path[0] = wETH;
-        path[1] = zetaToken;
+        path[1] = hanaToken;
 
         uint256[] memory amounts = uniswapV2Router.swapExactETHForTokens{value: msg.value}(
             minAmountOut,
@@ -51,17 +51,17 @@ contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Erro
 
         uint256 amountOut = amounts[path.length - 1];
 
-        emit EthExchangedForZeta(msg.value, amountOut);
+        emit EthExchangedForHana(msg.value, amountOut);
         return amountOut;
     }
 
-    function getZetaFromToken(
+    function getHanaFromToken(
         address destinationAddress,
         uint256 minAmountOut,
         address inputToken,
         uint256 inputTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0) || inputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0) || inputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (inputTokenAmount == 0) revert InputCantBeZero();
 
         IERC20(inputToken).safeTransferFrom(msg.sender, address(this), inputTokenAmount);
@@ -71,12 +71,12 @@ contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Erro
         if (inputToken == wETH) {
             path = new address[](2);
             path[0] = wETH;
-            path[1] = zetaToken;
+            path[1] = hanaToken;
         } else {
             path = new address[](3);
             path[0] = inputToken;
             path[1] = wETH;
-            path[2] = zetaToken;
+            path[2] = hanaToken;
         }
 
         uint256[] memory amounts = uniswapV2Router.swapExactTokensForTokens(
@@ -88,27 +88,27 @@ contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Erro
         );
         uint256 amountOut = amounts[path.length - 1];
 
-        emit TokenExchangedForZeta(inputToken, inputTokenAmount, amountOut);
+        emit TokenExchangedForHana(inputToken, inputTokenAmount, amountOut);
         return amountOut;
     }
 
-    function getEthFromZeta(
+    function getEthFromHana(
         address destinationAddress,
         uint256 minAmountOut,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(uniswapV2Router), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(uniswapV2Router), hanaTokenAmount);
 
         address[] memory path = new address[](2);
-        path[0] = zetaToken;
+        path[0] = hanaToken;
         path[1] = wETH;
 
         uint256[] memory amounts = uniswapV2Router.swapExactTokensForETH(
-            zetaTokenAmount,
+            hanaTokenAmount,
             minAmountOut,
             path,
             destinationAddress,
@@ -117,36 +117,36 @@ contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Erro
 
         uint256 amountOut = amounts[path.length - 1];
 
-        emit ZetaExchangedForEth(zetaTokenAmount, amountOut);
+        emit HanaExchangedForEth(hanaTokenAmount, amountOut);
         return amountOut;
     }
 
-    function getTokenFromZeta(
+    function getTokenFromHana(
         address destinationAddress,
         uint256 minAmountOut,
         address outputToken,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0) || outputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0) || outputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(uniswapV2Router), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(uniswapV2Router), hanaTokenAmount);
 
         address[] memory path;
         if (outputToken == wETH) {
             path = new address[](2);
-            path[0] = zetaToken;
+            path[0] = hanaToken;
             path[1] = wETH;
         } else {
             path = new address[](3);
-            path[0] = zetaToken;
+            path[0] = hanaToken;
             path[1] = wETH;
             path[2] = outputToken;
         }
 
         uint256[] memory amounts = uniswapV2Router.swapExactTokensForTokens(
-            zetaTokenAmount,
+            hanaTokenAmount,
             minAmountOut,
             path,
             destinationAddress,
@@ -155,14 +155,14 @@ contract ZetaTokenConsumerUniV2 is ZetaTokenConsumer, ZetaTokenConsumerUniV2Erro
 
         uint256 amountOut = amounts[path.length - 1];
 
-        emit ZetaExchangedForToken(outputToken, zetaTokenAmount, amountOut);
+        emit HanaExchangedForToken(outputToken, hanaTokenAmount, amountOut);
         return amountOut;
     }
 
-    function hasZetaLiquidity() external view override returns (bool) {
+    function hasHanaLiquidity() external view override returns (bool) {
         address[] memory path = new address[](2);
         path[0] = wETH;
-        path[1] = zetaToken;
+        path[1] = hanaToken;
 
         try uniswapV2Router.getAmountsOut(1, path) returns (uint256[] memory amounts) {
             return amounts[path.length - 1] > 0;

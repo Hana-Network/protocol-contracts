@@ -2,23 +2,23 @@
 pragma solidity 0.8.7;
 
 /**
- * @dev Interfaces of SystemContract and ZRC20 to make easier to import.
+ * @dev Interfaces of SystemContract and HRC20 to make easier to import.
  */
 interface ISystem {
     function FUNGIBLE_MODULE_ADDRESS() external view returns (address);
 
-    function wZetaContractAddress() external view returns (address);
+    function wHanaContractAddress() external view returns (address);
 
     function uniswapv2FactoryAddress() external view returns (address);
 
     function gasPriceByChainId(uint256 chainID) external view returns (uint256);
 
-    function gasCoinZRC20ByChainId(uint256 chainID) external view returns (address);
+    function gasCoinHRC20ByChainId(uint256 chainID) external view returns (address);
 
-    function gasZetaPoolByChainId(uint256 chainID) external view returns (address);
+    function gasHanaPoolByChainId(uint256 chainID) external view returns (address);
 }
 
-interface IZRC20 {
+interface IHRC20 {
     function totalSupply() external view returns (uint256);
 
     function balanceOf(address account) external view returns (uint256);
@@ -56,7 +56,7 @@ abstract contract Context {
     }
 }
 
-interface IZRC20Metadata is IZRC20 {
+interface IHRC20Metadata is IHRC20 {
     function name() external view returns (string memory);
 
     function symbol() external view returns (string memory);
@@ -64,17 +64,17 @@ interface IZRC20Metadata is IZRC20 {
     function decimals() external view returns (uint8);
 }
 
-/// @dev Coin types for ZRC20. Zeta value should not be used.
+/// @dev Coin types for HRC20. Hana value should not be used.
 enum CoinType {
-    Zeta,
+    Hana,
     Gas,
     ERC20
 }
 
 /**
- * @dev Any ZetaChain Contract must implement this interface to allow SystemContract to interact with.
+ * @dev Any HanaNetwork Contract must implement this interface to allow SystemContract to interact with.
  * This is only required if the contract wants to interact with other chains.
  */
-interface zContract {
-    function onCrossChainCall(address zrc20, uint256 amount, bytes calldata message) external;
+interface hContract {
+    function onCrossChainCall(address hrc20, uint256 amount, bytes calldata message) external;
 }

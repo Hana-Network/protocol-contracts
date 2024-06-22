@@ -3,9 +3,9 @@ pragma solidity 0.8.7;
 import "./Interfaces.sol";
 
 /**
- * @dev Custom errors for ZRC20
+ * @dev Custom errors for HRC20
  */
-interface ZRC20Errors {
+interface HRC20Errors {
     // @dev: Error thrown when caller is not the fungible module
     error CallerIsNotFungibleModule();
     error InvalidSender();
@@ -17,7 +17,7 @@ interface ZRC20Errors {
     error ZeroAddress();
 }
 
-contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
+contract HRC20 is Context, IHRC20, IHRC20Metadata, HRC20Errors {
     /// @notice Fungible address is always the same, maintained at the protocol level
     address public constant FUNGIBLE_MODULE_ADDRESS = 0x735b14BB79463307AAcBED86DAf3322B1e6226aB;
     /// @notice Chain id.abi
@@ -47,7 +47,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev The only one allowed to deploy new ZRC20 is fungible address.
+     * @dev The only one allowed to deploy new HRC20 is fungible address.
      */
     constructor(
         string memory name_,
@@ -69,7 +69,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev ZRC20 name
+     * @dev HRC20 name
      * @return name as string
      */
     function name() public view virtual override returns (string memory) {
@@ -77,7 +77,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev ZRC20 symbol.
+     * @dev HRC20 symbol.
      * @return symbol as string.
      */
     function symbol() public view virtual override returns (string memory) {
@@ -85,7 +85,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev ZRC20 decimals.
+     * @dev HRC20 decimals.
      * @return returns uint8 decimals.
      */
     function decimals() public view virtual override returns (uint8) {
@@ -93,7 +93,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev ZRC20 total supply.
+     * @dev HRC20 total supply.
      * @return returns uint256 total supply.
      */
     function totalSupply() public view virtual override returns (uint256) {
@@ -101,7 +101,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev Returns ZRC20 balance of an account.
+     * @dev Returns HRC20 balance of an account.
      * @param account, account address for which balance is requested.
      * @return uint256 account balance.
      */
@@ -110,7 +110,7 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
     }
 
     /**
-     * @dev Returns ZRC20 balance of an account.
+     * @dev Returns HRC20 balance of an account.
      * @param recipient, recipiuent address to which transfer is done.
      * @return true/false if transfer succeeded/failed.
      */
@@ -246,11 +246,11 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
 
     /**
      * @dev Withdraws gas fees.
-     * @return returns the ZRC20 address for gas on the same chain of this ZRC20, and calculates the gas fee for withdraw()
+     * @return returns the HRC20 address for gas on the same chain of this HRC20, and calculates the gas fee for withdraw()
      */
     function withdrawGasFee() public view override returns (address, uint256) {
-        address gasZRC20 = ISystem(SYSTEM_CONTRACT_ADDRESS).gasCoinZRC20ByChainId(CHAIN_ID);
-        if (gasZRC20 == address(0)) {
+        address gasHRC20 = ISystem(SYSTEM_CONTRACT_ADDRESS).gasCoinHRC20ByChainId(CHAIN_ID);
+        if (gasHRC20 == address(0)) {
             revert ZeroGasCoin();
         }
         uint256 gasPrice = ISystem(SYSTEM_CONTRACT_ADDRESS).gasPriceByChainId(CHAIN_ID);
@@ -258,19 +258,19 @@ contract ZRC20 is Context, IZRC20, IZRC20Metadata, ZRC20Errors {
             revert ZeroGasPrice();
         }
         uint256 gasFee = gasPrice * GAS_LIMIT + PROTOCOL_FLAT_FEE;
-        return (gasZRC20, gasFee);
+        return (gasHRC20, gasFee);
     }
 
     /**
-     * @dev Withraws ZRC20 tokens to external chains, this function causes cctx module to send out outbound tx to the outbound chain
-     * this contract should be given enough allowance of the gas ZRC20 to pay for outbound tx gas fee.
+     * @dev Withraws HRC20 tokens to external chains, this function causes cctx module to send out outbound tx to the outbound chain
+     * this contract should be given enough allowance of the gas HRC20 to pay for outbound tx gas fee.
      * @param to, recipient address.
      * @param amount, amount to deposit.
      * @return true/false if succeeded/failed.
      */
     function withdraw(bytes memory to, uint256 amount) external override returns (bool) {
-        (address gasZRC20, uint256 gasFee) = withdrawGasFee();
-        if (!IZRC20(gasZRC20).transferFrom(msg.sender, FUNGIBLE_MODULE_ADDRESS, gasFee)) {
+        (address gasHRC20, uint256 gasFee) = withdrawGasFee();
+        if (!IHRC20(gasHRC20).transferFrom(msg.sender, FUNGIBLE_MODULE_ADDRESS, gasFee)) {
             revert GasFeeTransferFailed();
         }
         _burn(msg.sender, amount);

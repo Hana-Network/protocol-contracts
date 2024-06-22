@@ -5,11 +5,11 @@ import "@openzeppelin/contracts/interfaces/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@uniswap/v3-periphery/contracts/interfaces/IQuoter.sol";
 
-import "../interfaces/ZetaInterfaces.sol";
+import "../interfaces/HanaInterfaces.sol";
 import "./interfaces/TridentConcentratedLiquidityPoolFactory.sol";
 import "./interfaces/TridentIPoolRouter.sol";
 
-interface ZetaTokenConsumerTridentErrors {
+interface HanaTokenConsumerTridentErrors {
     error InputCantBeZero();
 
     error ErrorSendingETH();
@@ -28,29 +28,29 @@ interface WETH9 {
 }
 
 /**
- * @dev Trident strategy for ZetaTokenConsumer
+ * @dev Trident strategy for HanaTokenConsumer
  */
-contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTridentErrors {
+contract HanaTokenConsumerTrident is HanaTokenConsumer, HanaTokenConsumerTridentErrors {
     using SafeERC20 for IERC20;
     uint256 internal constant MAX_DEADLINE = 200;
 
     address internal immutable WETH9Address;
-    address public immutable zetaToken;
+    address public immutable hanaToken;
 
     IPoolRouter public immutable tridentRouter;
     ConcentratedLiquidityPoolFactory public immutable poolFactory;
 
     bool internal _locked;
 
-    constructor(address zetaToken_, address uniswapV3Router_, address WETH9Address_, address poolFactory_) {
+    constructor(address hanaToken_, address uniswapV3Router_, address WETH9Address_, address poolFactory_) {
         if (
-            zetaToken_ == address(0) ||
+            hanaToken_ == address(0) ||
             uniswapV3Router_ == address(0) ||
             WETH9Address_ == address(0) ||
             poolFactory_ == address(0)
-        ) revert ZetaCommonErrors.InvalidAddress();
+        ) revert HanaCommonErrors.InvalidAddress();
 
-        zetaToken = zetaToken_;
+        hanaToken = hanaToken_;
         tridentRouter = IPoolRouter(uniswapV3Router_);
         poolFactory = ConcentratedLiquidityPoolFactory(poolFactory_);
         WETH9Address = WETH9Address_;
@@ -71,14 +71,14 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
         return (token1, token0);
     }
 
-    function getZetaFromEth(
+    function getHanaFromEth(
         address destinationAddress,
         uint256 minAmountOut
     ) external payable override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (msg.value == 0) revert InputCantBeZero();
 
-        (address token0, address token1) = getPair(WETH9Address, zetaToken);
+        (address token0, address token1) = getPair(WETH9Address, hanaToken);
         address[] memory pairPools = poolFactory.getPools(token0, token1, 0, 1);
 
         IPoolRouter.ExactInputSingleParams memory params = IPoolRouter.ExactInputSingleParams({
@@ -92,17 +92,17 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
 
         uint256 amountOut = tridentRouter.exactInputSingle{value: msg.value}(params);
 
-        emit EthExchangedForZeta(msg.value, amountOut);
+        emit EthExchangedForHana(msg.value, amountOut);
         return amountOut;
     }
 
-    function getZetaFromToken(
+    function getHanaFromToken(
         address destinationAddress,
         uint256 minAmountOut,
         address inputToken,
         uint256 inputTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0) || inputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
+        if (destinationAddress == address(0) || inputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
         if (inputTokenAmount == 0) revert InputCantBeZero();
 
         IERC20(inputToken).safeTransferFrom(msg.sender, address(this), inputTokenAmount);
@@ -111,7 +111,7 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
         (address token0, address token1) = getPair(inputToken, WETH9Address);
         address[] memory pairPools1 = poolFactory.getPools(token0, token1, 0, 1);
 
-        (token0, token1) = getPair(WETH9Address, zetaToken);
+        (token0, token1) = getPair(WETH9Address, hanaToken);
         address[] memory pairPools2 = poolFactory.getPools(token0, token1, 0, 1);
 
         address[] memory path = new address[](2);
@@ -129,27 +129,27 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
 
         uint256 amountOut = tridentRouter.exactInput(params);
 
-        emit TokenExchangedForZeta(inputToken, inputTokenAmount, amountOut);
+        emit TokenExchangedForHana(inputToken, inputTokenAmount, amountOut);
         return amountOut;
     }
 
-    function getEthFromZeta(
+    function getEthFromHana(
         address destinationAddress,
         uint256 minAmountOut,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override returns (uint256) {
-        if (destinationAddress == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(tridentRouter), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(tridentRouter), hanaTokenAmount);
 
-        (address token0, address token1) = getPair(zetaToken, WETH9Address);
+        (address token0, address token1) = getPair(hanaToken, WETH9Address);
         address[] memory pairPools = poolFactory.getPools(token0, token1, 0, 1);
 
         IPoolRouter.ExactInputSingleParams memory params = IPoolRouter.ExactInputSingleParams({
-            tokenIn: zetaToken,
-            amountIn: zetaTokenAmount,
+            tokenIn: hanaToken,
+            amountIn: hanaTokenAmount,
             amountOutMinimum: minAmountOut,
             pool: pairPools[0],
             to: destinationAddress,
@@ -158,24 +158,24 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
 
         uint256 amountOut = tridentRouter.exactInputSingle(params);
 
-        emit ZetaExchangedForEth(zetaTokenAmount, amountOut);
+        emit HanaExchangedForEth(hanaTokenAmount, amountOut);
 
         return amountOut;
     }
 
-    function getTokenFromZeta(
+    function getTokenFromHana(
         address destinationAddress,
         uint256 minAmountOut,
         address outputToken,
-        uint256 zetaTokenAmount
+        uint256 hanaTokenAmount
     ) external override nonReentrant returns (uint256) {
-        if (destinationAddress == address(0) || outputToken == address(0)) revert ZetaCommonErrors.InvalidAddress();
-        if (zetaTokenAmount == 0) revert InputCantBeZero();
+        if (destinationAddress == address(0) || outputToken == address(0)) revert HanaCommonErrors.InvalidAddress();
+        if (hanaTokenAmount == 0) revert InputCantBeZero();
 
-        IERC20(zetaToken).safeTransferFrom(msg.sender, address(this), zetaTokenAmount);
-        IERC20(zetaToken).safeApprove(address(tridentRouter), zetaTokenAmount);
+        IERC20(hanaToken).safeTransferFrom(msg.sender, address(this), hanaTokenAmount);
+        IERC20(hanaToken).safeApprove(address(tridentRouter), hanaTokenAmount);
 
-        (address token0, address token1) = getPair(zetaToken, WETH9Address);
+        (address token0, address token1) = getPair(hanaToken, WETH9Address);
         address[] memory pairPools1 = poolFactory.getPools(token0, token1, 0, 1);
 
         (token0, token1) = getPair(WETH9Address, outputToken);
@@ -186,8 +186,8 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
         path[1] = pairPools2[0];
 
         IPoolRouter.ExactInputParams memory params = IPoolRouter.ExactInputParams({
-            tokenIn: zetaToken,
-            amountIn: zetaTokenAmount,
+            tokenIn: hanaToken,
+            amountIn: hanaTokenAmount,
             amountOutMinimum: minAmountOut,
             path: path,
             to: destinationAddress,
@@ -196,11 +196,11 @@ contract ZetaTokenConsumerTrident is ZetaTokenConsumer, ZetaTokenConsumerTrident
 
         uint256 amountOut = tridentRouter.exactInput(params);
 
-        emit ZetaExchangedForToken(outputToken, zetaTokenAmount, amountOut);
+        emit HanaExchangedForToken(outputToken, hanaTokenAmount, amountOut);
         return amountOut;
     }
 
-    function hasZetaLiquidity() external view override returns (bool) {
+    function hasHanaLiquidity() external view override returns (bool) {
         //@TODO: Implement
         return false;
     }
