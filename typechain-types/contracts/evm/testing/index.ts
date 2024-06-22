@@ -3,5 +3,5 @@
 /* eslint-disable */
 import type * as testUniswapV3ContractsSol from "./TestUniswapV3Contracts.sol";
 export type { testUniswapV3ContractsSol };
-export type { ZetaInteractorMock } from "./ZetaInteractorMock";
-export type { ZetaReceiverMock } from "./ZetaReceiverMock";
+export type { HanaInteractorMock } from "./HanaInteractorMock";
+export type { HanaReceiverMock } from "./HanaReceiverMock";

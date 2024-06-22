@@ -67,7 +67,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: "ZetaTransferError",
+    name: "HanaTranserError",
     type: "error",
   },
 ] as const;
