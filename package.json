@@ -62,7 +62,7 @@
   "keywords": [],
   "license": "MIT",
   "main": "./dist/lib/index.js",
-  "name": "@zetachain/protocol-contracts",
+  "name": "@hananetwork/protocol-contracts",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
