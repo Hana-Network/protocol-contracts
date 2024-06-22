@@ -1,6 +1,6 @@
-# ZetaChain Protocol Contracts
+# HanaNetwork Protocol Contracts
 
-This repository contains the smart contracts for ZetaChain. The smart contracts
+This repository contains the smart contracts for HanaNetwork. The smart contracts
 are written in Solidity, and the repository includes scripts to compile the
 contracts and generate Go bindings.
 
@@ -10,27 +10,27 @@ As a dApp developer, you can install the protocol contracts package into your
 project:
 
 ```
-yarn add --dev @zetachain/protocol-contracts
+yarn add --dev @hananetwork/protocol-contracts
 ```
 
 Importing
-[`ZetaInterfaces`](https://www.zetachain.com/docs/developers/cross-chain-messaging/connector/)
-and `ZetaInteractor` for cross-chain messaging:
+[`HanaInterfaces`](https://www.hana.network/docs/developers/cross-chain-messaging/connector/)
+and `HanaInteractor` for cross-chain messaging:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/evm/interfaces/ZetaInterfaces.sol";
-import "@zetachain/protocol-contracts/contracts/evm/tools/ZetaInteractor.sol";
+import "@hananetwork/protocol-contracts/contracts/evm/interfaces/HanaInterfaces.sol";
+import "@hananetwork/protocol-contracts/contracts/evm/tools/HanaInteractor.sol";
 ```
 
-Importing [ZRC20](https://www.zetachain.com/docs/developers/concepts/zrc-20/)
+Importing [HRC20](https://www.hana.network/docs/developers/concepts/hrc-20/)
 and the [system
-contract](https://www.zetachain.com/docs/developers/concepts/system-contract/)
+contract](https://www.hana.network/docs/developers/concepts/system-contract/)
 for omni-chain smart contracts:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/zevm/interfaces/IZRC20.sol";
-import "@zetachain/protocol-contracts/contracts/zevm/interfaces/zContract.sol";
-import "@zetachain/protocol-contracts/contracts/zevm/SystemContract.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/IHRC20.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/hContract.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/SystemContract.sol";
 ```
 
 ## Prerequisites
@@ -47,7 +47,7 @@ Before you can contribute to this project, you must have the following installed
 To get started with this project, you should first clone the repository:
 
 ```
-git clone https://github.com/zeta-chain/protocol
+git clone https://github.com/hana-network/protocol
 ```
 
 Once you have cloned the repository, you can navigate to the project directory
