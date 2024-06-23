@@ -9,13 +9,13 @@ As a dApp developer, you can install the protocol contracts package into your
 project:
 
 ```
-yarn add --dev @zetachain/protocol-contracts
+yarn add --dev @hananetwork/protocol-contracts
 ```
 
 Getting the TSS address on BSC testnet:
 
 ```ts
-import { getAddress } from "@zetachain/protocol-contracts";
+import { getAddress } from "@hananetwork/protocol-contracts";
 
 getAddress("tss", "hana_testnet");
 ```
@@ -23,7 +23,7 @@ getAddress("tss", "hana_testnet");
 Getting a HRC-20 BSC USDT on HanaNetwork Mainnet Beta:
 
 ```ts
-import { getAddress } from "@zetachain/protocol-contracts";
+import { getAddress } from "@hananetwork/protocol-contracts";
 
 getAddress("hrc20", "hana_mainnet", "USDT.BSC");
 ```
@@ -38,8 +38,8 @@ Importing
 and `HanaInteractor` for cross-chain messaging:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/evm/interfaces/HanaInterfaces.sol";
-import "@zetachain/protocol-contracts/contracts/evm/tools/HanaInteractor.sol";
+import "@hananetwork/protocol-contracts/contracts/evm/interfaces/HanaInterfaces.sol";
+import "@hananetwork/protocol-contracts/contracts/evm/tools/HanaInteractor.sol";
 ```
 
 Importing [HRC20](https://www.hana.network/docs/developers/tokens/hrc20/)
@@ -48,9 +48,9 @@ contract](https://www.hana.network/docs/developers/omnichain/system-contract/)
 for omni-chain smart contracts:
 
 ```solidity
-import "@zetachain/protocol-contracts/contracts/hevm/interfaces/IHRC20.sol";
-import "@zetachain/protocol-contracts/contracts/hevm/interfaces/hContract.sol";
-import "@zetachain/protocol-contracts/contracts/hevm/SystemContract.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/IHRC20.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/hContract.sol";
+import "@hananetwork/protocol-contracts/contracts/hevm/SystemContract.sol";
 ```
 
 ## Prerequisites for Development
