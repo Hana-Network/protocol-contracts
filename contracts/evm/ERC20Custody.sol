@@ -159,7 +159,7 @@ contract ERC20Custody {
      * @param recipient, recipient address.
      * @param asset, ERC20 asset.
      * @param amount, asset amount.
-     * @param message, bytes message or encoded zetechain call.
+     * @param message, bytes message or encoded hananetwork call.
      */
     function deposit(bytes calldata recipient, IERC20 asset, uint256 amount, bytes calldata message) external {
         if (paused) {

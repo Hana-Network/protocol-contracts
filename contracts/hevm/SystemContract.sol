@@ -22,7 +22,7 @@ interface SystemContractErrors {
 contract SystemContract is SystemContractErrors {
     /// @notice Map to know the gas price of each chain given a chain id.
     mapping(uint256 => uint256) public gasPriceByChainId;
-    /// @notice Map to know the HRC20 address of a token given a chain id, ex zETH, zBNB etc.
+    /// @notice Map to know the HRC20 address of a token given a chain id, ex hETH, hBNB etc.
     mapping(uint256 => address) public gasCoinHRC20ByChainId;
     // @dev: Map to know uniswap V2 pool of HANA/HRC20 given a chain id. This refer to the build in uniswap deployed at genesis.
     mapping(uint256 => address) public gasHanaPoolByChainId;
@@ -57,7 +57,7 @@ contract SystemContract is SystemContractErrors {
     }
 
     /**
-     * @dev Deposit foreign coins into ZRC20 and call user specified contract on zEVM.
+     * @dev Deposit foreign coins into HRC20 and call user specified contract on hEVM.
      * @param context, context data for deposit.
      * @param hrc20, hrc20 address for deposit.
      * @param amount, amount to deposit.
