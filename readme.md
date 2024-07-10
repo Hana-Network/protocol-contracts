@@ -1,90 +1,65 @@
 # HanaNetwork Protocol Contracts
 
-This repository contains HanaNetwork protocol contracts: Solidity source code,
-generated Go bindings, deployed contract addresses and helper utilities.
+This repository houses the HanaNetwork protocol contracts, including Solidity source code, 
+generated Go bindings, deployed contract addresses, and helper utilities.
 
 ## Importing Protocol Contracts
 
-As a dApp developer, you can install the protocol contracts package into your
-project:
+To incorporate the protocol contracts into your dApp project:
 
-```
+```bash
 yarn add --dev @hananetwork/protocol-contracts
 ```
 
-Getting the TSS address on BSC testnet:
+### Usage Examples
 
-```ts
+#### Retrieving TSS Address (BSC Testnet)
+
+```typescript
 import { getAddress } from "@hananetwork/protocol-contracts";
 
 getAddress("tss", "hana_testnet");
 ```
 
-Getting a HRC-20 BSC USDT on HanaNetwork Mainnet Beta:
+#### Fetching HRC-20 BSC USDT Address (HanaNetwork Mainnet Beta)
 
-```ts
+```typescript
 import { getAddress } from "@hananetwork/protocol-contracts";
 
-getAddress("hrc20", "hana_mainnet", "USDT.BSC");
+const usdtAddress = getAddress("hrc20", "hana_mainnet", "USDT.BSC");
 ```
 
-The third argument (symbol) is only used when querying HRC-20 addresses to
-specify which token address is needed.
+Note: The third argument (symbol) is specific to HRC-20 address queries.
 
-To view a table of all contracts visit the [Contract Addresses](https://www.hana.network/docs/reference/contracts/) page in the docs.
+For a comprehensive list of contract addresses, refer to the [Contract Addresses](https://docs.hana.network/docs/reference/contracts/) documentation.
 
-Importing
-[`HanaInterfaces`](https://www.hana.network/docs/developers/cross-chain-messaging/connector/)
-and `HanaInteractor` for cross-chain messaging:
+## Development Prerequisites
 
-```solidity
-import "@hananetwork/protocol-contracts/contracts/evm/interfaces/HanaInterfaces.sol";
-import "@hananetwork/protocol-contracts/contracts/evm/tools/HanaInteractor.sol";
-```
-
-Importing [HRC20](https://www.hana.network/docs/developers/tokens/hrc20/)
-and the [system
-contract](https://www.hana.network/docs/developers/omnichain/system-contract/)
-for omni-chain smart contracts:
-
-```solidity
-import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/IHRC20.sol";
-import "@hananetwork/protocol-contracts/contracts/hevm/interfaces/hContract.sol";
-import "@hananetwork/protocol-contracts/contracts/hevm/SystemContract.sol";
-```
-
-## Prerequisites for Development
-
-Before you can contribute to this project, you must have the following installed:
+Ensure you have the following tools installed:
 
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 - [jq](https://stedolan.github.io/jq/)
 - [abigen](https://geth.ethereum.org/docs/tools/abigen)
 
-## Compiling Contracts
+## Development Workflow
 
-To compile the contracts, run the following command:
+### Compiling Contracts
 
-```
+To compile Solidity contracts:
+
+```bash
 yarn compile
 ```
 
-This will compile the Solidity contracts and output the resulting JSON artifacts
-to the `artifacts` directory.
+This command generates JSON artifacts in the `artifacts` directory.
 
-## Generating Go Bindings and Contract Addresses
+### Generating Go Bindings and Contract Addresses
 
-To generate Go bindings for the Solidity contracts and fetch, run the following command:
+To create Go bindings for the Solidity contracts:
 
-```
+```bash
 yarn generate
 ```
 
-This will use `abigen` to generate Go bindings for the contracts and output the
-resulting Go files to the `pkg` directory.
-
-## Contributing
-
-If you would like to contribute to this project, please fork the repository and
-submit a pull request. All contributions are welcome!
+This utilizes `abigen` to produce Go files in the `pkg` directory.
